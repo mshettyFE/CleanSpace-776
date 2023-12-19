@@ -1,6 +1,8 @@
 #include "gametank.h"
 #include "drawing_funcs.h"
 #include "gen/assets/Bullet.h"
+#include "gen/assets/Meteor.h"
+#include "gen/assets/Small.h"
 #include <stdlib.h>
 
 int main () {
@@ -18,15 +20,19 @@ int main () {
     clear_border(0);
 
     load_spritesheet(&ASSET__Bullet__Bullet_bmp, 0);
+    load_spritesheet(&ASSET__Meteor__Meteor_bmp, 1);
+    load_spritesheet(&ASSET__Small__Small_bmp, 2);
 
 
     while (1) {                                     //  Run forever
         clear_screen(0);
         clear_border(0);
-        draw_sprite_frame(&ASSET__Bullet__Bullet_json,
-        col, row, 0, 0, 0);
+//        draw_sprite_frame(&ASSET__Bullet__Bullet_json,
+//        col, row, 0, 0, 0);
+        draw_sprite_frame(&ASSET__Small__Small_json,
+        col, row, cur_frame, 0, 2);
 //        draw_sprite(col,row,10,10,0,0,0);
-        if(cur_frame == 7){
+        if(cur_frame == 63){
             cur_frame = 0;
         }
 //        draw_box(col, row, 8, 8, 92);
@@ -48,7 +54,6 @@ int main () {
         sleep(1);
         flip_pages();
         ++cur_frame;
-        
     }
 
   return (0);                                     //  We should never get here!
