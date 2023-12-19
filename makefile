@@ -14,7 +14,7 @@ endif
 #set this for your output ROM file name
 TARGET=game.gtr
 
-EMUPATH=../GameTankEmulator
+EMUPATH=~/GameTankEmulator
 
 FLASHTOOL = ../GTFO
 
@@ -147,7 +147,7 @@ flash: $(BANKS)
 	$(FLASHTOOL)/bin/GTFO -p $(PORT) bin/$(TARGET).bank*
 
 emulate: bin/$(TARGET)
-	$(EMUPATH)/bin/$(OS)/GameTankEmulator bin/$(TARGET)
+	$(EMUPATH)/build/GameTankEmulator bin/$(TARGET)
 
 node_modules: scripts/build_setup/node_modules scripts/converters/node_modules
 
