@@ -1,6 +1,8 @@
 .swp
+imgui.ini
 *.obj
 *.map
+.vscode
 build/*.bin
 *.TMP
 *.si

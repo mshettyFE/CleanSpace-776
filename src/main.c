@@ -4,13 +4,16 @@
 #include "gen/assets/Meteor.h"
 #include "gen/assets/Small.h"
 #include "object.h"
+#include "player.h"
 #include <stdlib.h>
 
 int main () {
     char col = 30, row = 20;
+    char col_two = 60, row_two = 40;
     char dx = 1, dy = 1;
     char cur_frame = 0;
-    struct Object* player1;
+    struct Player* players[2];
+    struct Object* test;
 
     init_graphics();
 
@@ -25,20 +28,19 @@ int main () {
     load_spritesheet(&ASSET__Meteor__Meteor_bmp, 1);
     load_spritesheet(&ASSET__Small__Small_bmp, 2);
 
-
-    player1 = initObject(  col, row, dx, dy, 16, &ASSET__Small__Small_json, 2);
+    players[PLYR_ONE_ID] =  initPlayer(  col,  row, 2, PLYR_ONE_ID);
+    players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, 2, PLYR_TWO_ID);
 
     while (1) {                                     //  Run forever
         clear_screen(0);
         clear_border(0);
-        MoveObject(player1);
-        ObjectDraw(player1,0,0);
-//        draw_sprite_frame(&ASSET__Bullet__Bullet_json,
-//        col, row, 0, 0, 0);
-//        draw_sprite(col,row,10,10,0,0,0);
-//        draw_box(col, row, 8, 8, 92);
-	cursorX = 20;
-	cursorY = 30;
+        update_inputs();
+        PlayerUpdate(players[0]);
+        PlayerUpdate(players[1]);
+        MoveObject(players[0]->obj);
+        MoveObject(players[1]->obj);
+        DrawPlayer(players[0]);
+        DrawPlayer(players[1]);
         await_draw_queue();
         sleep(1);
         flip_pages();
