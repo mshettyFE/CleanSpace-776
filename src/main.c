@@ -11,8 +11,10 @@ int main () {
     char col_two = 60, row_two = 40;
     char dx = 1, dy = 1;
     char cur_frame = 0;
+    coordinate MAX_SPEED_SQUARED;
     struct Player* players[2];
-    struct Object* test;
+    MAX_SPEED_SQUARED = gen_coord(9,0);
+
 
     init_graphics();
 
@@ -32,8 +34,8 @@ int main () {
         clear_screen(0);
         clear_border(0);
         update_inputs();
-        PlayerUpdate(players[0]);
-        PlayerUpdate(players[1]);
+        PlayerUpdate(players[0], MAX_SPEED_SQUARED);
+        PlayerUpdate(players[1], MAX_SPEED_SQUARED);
         MoveObject(players[0]->obj);
         MoveObject(players[1]->obj);
         DrawPlayer(players[0]);

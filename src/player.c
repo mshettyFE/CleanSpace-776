@@ -33,10 +33,12 @@ void DrawPlayer(struct Player* plyr){
 
 
 
-void PlayerUpdate(struct Player* plyr){
+void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
     int player_inpts;
     char switch_flip=0;
     char index;
+    coordinate acceleration_x;
+    coordinate acceleration_y;
 
     switch (plyr->player_num)
     {
@@ -135,9 +137,12 @@ void PlayerUpdate(struct Player* plyr){
         }
     }
 
+    acceleration_x = gen_x_accel(index,plyr->cur_flip);
+    acceleration_y = gen_y_accel(index,plyr->cur_flip);
+
     if(player_inpts & INPUT_MASK_UP) {
-        plyr->obj->v_x = gen_x_velocity(index, plyr->cur_flip);
-        plyr->obj->v_y = gen_y_velocity(index, plyr->cur_flip);   
+        plyr->obj->v_x = acceleration_x;
+        plyr->obj->v_y = acceleration_y;   
     }
 
 }
