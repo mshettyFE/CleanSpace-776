@@ -1,4 +1,6 @@
 #include "object.h"
+#include "AABB.h"
+#include <stdlib.h>
 
 struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  const char a_v_y, const  char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank){
@@ -11,7 +13,7 @@ struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  
     output->v_x.b.lsb = 0;
     output->v_y.b.msb = a_v_y;
     output->v_y.b.lsb = 0;
-    output->size = a_size;
+    output->bounding_box = initAABB(output->x,output->y,a_size);
     output->sprite_table = a_sprite_table;
     output->sprite_table_bank = a_sprite_table_bank;
     output->bank = a_bank;
@@ -25,11 +27,11 @@ struct Object* initObjectCoord( const coordinate a_x, const  coordinate a_y, con
     output->y = a_y;
     output->v_x = a_v_x;
     output->v_y = a_v_y;
-    output->size = a_size;
+    output->bounding_box = initAABB(output->x,output->y,a_size);
     output->sprite_table = a_sprite_table;
     output->sprite_table_bank = a_sprite_table_bank;
     output->bank = a_bank;
-    return output;  
+    return output;
 }
 
 
@@ -52,4 +54,9 @@ void MoveObject(struct Object* obj){
       obj->v_y.b.msb = -1;
   }
 */
+}
+
+void freeObj(struct Object* obj){
+  freeAABB(obj->bounding_box);
+  free(obj);
 }

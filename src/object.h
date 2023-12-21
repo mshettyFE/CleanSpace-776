@@ -2,24 +2,17 @@
 #define OBJECT
 
 #include "drawing_funcs.h"
+#include "coordinate.h"
+#include "AABB.h"
 #include <stdlib.h>
-
-typedef struct {
-    char lsb;
-    char msb;
-} Fixed;
-
-typedef union coordinate {
-    unsigned int i;
-    Fixed b;
-} coordinate;
 
 struct Object{
   coordinate x;
   coordinate y;
   coordinate v_x;
   coordinate v_y;
-  char size;
+  struct AABB* bounding_box;
+  coordinate size;
   const char **sprite_table;
   char sprite_table_bank;
   char bank;
