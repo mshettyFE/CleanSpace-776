@@ -3,8 +3,23 @@
 #include "player.h"
 #include "input.h"
 #include "drawing_funcs.h"
+#include "coordinate.h"
+
+#include <stdlib.h>
 
 #include "gen/assets/Small.h"
+
+coordinate* gen_x_headings(){
+    coordinate* output = malloc(sizeof(coordinate)*32);
+    output[0] = gen_coord(0,0);
+    return output;
+}
+
+coordinate* gen_y_headings(){
+    coordinate* output = malloc(sizeof(coordinate)*32);
+    output[0] = gen_coord(0,0);
+    return output;
+}
 
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
@@ -130,15 +145,15 @@ void PlayerUpdate(struct Player* plyr){
                 break;
         }
     }
+ 
  /*
-   if(player_inpts & INPUT_MASK_UP) {
-        player_speed_squared = plyr->obj->v_x.i*plyr->obj->v_x.i+plyr->obj->v_y.i*plyr->obj->v_y.i;
+    if(player_inpts & INPUT_MASK_UP) {
           plyr->obj->v_y.i += delta.i;
     }
     else if(player_inpts & INPUT_MASK_DOWN) {
-        player_speed_squared = (plyr->obj->v_x.i*plyr->obj->v_x.i)+(plyr->obj->v_y.i*plyr->obj->v_y.i);
           plyr->obj->v_y.i -= delta.i;
     } 
- */
+
+ */ 
 
 }

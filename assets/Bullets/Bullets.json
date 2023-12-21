@@ -1,6 +1,6 @@
 { "frames": [
    {
-    "filename": "Bullets 0.bmp",
+    "filename": "Bullets 0.aseprite",
     "frame": { "x": 0, "y": 0, "w": 5, "h": 5 },
     "rotated": false,
     "trimmed": false,
@@ -9,7 +9,7 @@
     "duration": 100
    },
    {
-    "filename": "Bullets 1.bmp",
+    "filename": "Bullets 1.aseprite",
     "frame": { "x": 5, "y": 0, "w": 5, "h": 5 },
     "rotated": false,
     "trimmed": false,
@@ -18,7 +18,7 @@
     "duration": 100
    },
    {
-    "filename": "Bullets 2.bmp",
+    "filename": "Bullets 2.aseprite",
     "frame": { "x": 10, "y": 0, "w": 5, "h": 5 },
     "rotated": false,
     "trimmed": false,
@@ -27,7 +27,7 @@
     "duration": 100
    },
    {
-    "filename": "Bullets 3.bmp",
+    "filename": "Bullets 3.aseprite",
     "frame": { "x": 15, "y": 0, "w": 5, "h": 5 },
     "rotated": false,
     "trimmed": false,
@@ -36,7 +36,7 @@
     "duration": 100
    },
    {
-    "filename": "Bullets 4.bmp",
+    "filename": "Bullets 4.aseprite",
     "frame": { "x": 20, "y": 0, "w": 5, "h": 5 },
     "rotated": false,
     "trimmed": false,
@@ -45,7 +45,7 @@
     "duration": 100
    },
    {
-    "filename": "Bullets 5.bmp",
+    "filename": "Bullets 5.aseprite",
     "frame": { "x": 25, "y": 0, "w": 5, "h": 5 },
     "rotated": false,
     "trimmed": false,
@@ -54,7 +54,7 @@
     "duration": 100
    },
    {
-    "filename": "Bullets 6.bmp",
+    "filename": "Bullets 6.aseprite",
     "frame": { "x": 30, "y": 0, "w": 5, "h": 5 },
     "rotated": false,
     "trimmed": false,
@@ -63,7 +63,7 @@
     "duration": 100
    },
    {
-    "filename": "Bullets 7.bmp",
+    "filename": "Bullets 7.aseprite",
     "frame": { "x": 35, "y": 0, "w": 5, "h": 5 },
     "rotated": false,
     "trimmed": false,
@@ -75,7 +75,7 @@
  "meta": {
   "app": "http://www.aseprite.org/",
   "version": "1.x-dev",
-  "image": "Bullet.bmp",
+  "image": "Bullets.bmp",
   "format": "I8",
   "size": { "w": 128, "h": 5 },
   "scale": "1",

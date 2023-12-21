@@ -1,7 +1,5 @@
 #include "gametank.h"
 #include "drawing_funcs.h"
-#include "gen/assets/Bullet.h"
-#include "gen/assets/Meteor.h"
 #include "gen/assets/Small.h"
 #include "object.h"
 #include "player.h"
@@ -24,8 +22,6 @@ int main () {
     await_draw_queue();
     clear_border(0);
 
-    load_spritesheet(&ASSET__Bullet__Bullet_bmp, 0);
-    load_spritesheet(&ASSET__Meteor__Meteor_bmp, 1);
     load_spritesheet(&ASSET__Small__Small_bmp, 2);
 
     players[PLYR_ONE_ID] =  initPlayer(  col,  row, 2, PLYR_ONE_ID);

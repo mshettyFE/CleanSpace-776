@@ -7,8 +7,8 @@
 #define PLYR_ONE_ID 0
 #define PLYR_TWO_ID 1
 
-#define PLAYER_ONE_STRT_FRAME 48
-#define PLAYER_TWO_STRT_FRAME 56
+#define PLAYER_ONE_STRT_FRAME 0
+#define PLAYER_TWO_STRT_FRAME 8
 
 struct Player{
     struct Object* obj;
