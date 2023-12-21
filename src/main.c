@@ -3,6 +3,7 @@
 #include "gen/assets/Small.h"
 #include "object.h"
 #include "player.h"
+#include "constants.h"
 #include <stdlib.h>
 
 int main () {
@@ -22,7 +23,7 @@ int main () {
     await_draw_queue();
     clear_border(0);
 
-    load_spritesheet(&ASSET__Small__Small_bmp, 2);
+    load_spritesheet(&ASSET__Small__Small_bmp, SMALL_BANK);
 
     players[PLYR_ONE_ID] =  initPlayer(  col,  row, 2, PLYR_ONE_ID);
     players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, 2, PLYR_TWO_ID);
