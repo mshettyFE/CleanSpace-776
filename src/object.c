@@ -34,7 +34,6 @@ struct Object* initObjectCoord( const coordinate a_x, const  coordinate a_y, con
     return output;
 }
 
-
 void ObjectDraw(struct Object* obj, char a_frame, char a_flip){
   draw_sprite_frame(obj->sprite_table, obj->sprite_table_bank, obj->x.b.msb, obj->y.b.msb, a_frame, a_flip, obj->bank);
 }
@@ -42,19 +41,14 @@ void ObjectDraw(struct Object* obj, char a_frame, char a_flip){
 void MoveObject(struct Object* obj){
   obj->x.i += obj->v_x.i;
   obj->y.i += obj->v_y.i;
-/*
-  if(obj->x.b.msb == 1) {
-      obj->v_x.b.msb = 1;
-  } else if(obj->x.b.msb == 119) {
-      obj->v_x.b.msb = -1;
-  }
-  if(obj->y.b.msb == 8) {
-      obj->v_y.b.msb = 1;
-  } else if(obj->y.b.msb ==  112) {
-      obj->v_y.b.msb = -1;
-  }
-*/
 }
+
+coordinate getSpeedSquared(struct Object* obj){
+  coordinate output;
+  output.i = obj->v_x.i*obj->v_x.i+obj->v_y.i*obj->v_y.i;
+  return output;
+}
+
 
 void freeObj(struct Object* obj){
   freeAABB(obj->bounding_box);

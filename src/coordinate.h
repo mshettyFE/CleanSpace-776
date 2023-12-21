@@ -2,15 +2,19 @@
 #define COORDINATE
 
 typedef struct {
-    char lsb;
-    char msb;
+    unsigned char lsb;
+    signed char msb;
 } Fixed;
 
 typedef union coordinate {
-    unsigned int i;
+    signed int i;
     Fixed b;
 } coordinate;
 
-coordinate gen_coord(char msb, char lsb);
+coordinate gen_coord(signed char msb, unsigned char lsb);
+
+coordinate gen_x_velocity(const char a_frame, const char a_flip);
+
+coordinate gen_y_velocity(const char a_frame, const char a_flip);
 
 #endif

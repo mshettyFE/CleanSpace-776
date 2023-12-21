@@ -28,4 +28,6 @@ void ObjectDraw(struct Object* obj, char a_frame, char a_flip);
 
 void MoveObject(struct Object* obj);
 
+coordinate getSpeedSquared(struct Object* obj);
+
 #endif

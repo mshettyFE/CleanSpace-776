@@ -9,18 +9,6 @@
 
 #include "gen/assets/Small.h"
 
-coordinate* gen_x_headings(){
-    coordinate* output = malloc(sizeof(coordinate)*32);
-    output[0] = gen_coord(0,0);
-    return output;
-}
-
-coordinate* gen_y_headings(){
-    coordinate* output = malloc(sizeof(coordinate)*32);
-    output[0] = gen_coord(0,0);
-    return output;
-}
-
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
     plyr->obj = initObject( a_x, a_y, 0, 0, 4, &ASSET__Small__Small_json, a_bank);
@@ -42,13 +30,14 @@ void DrawPlayer(struct Player* plyr){
     ObjectDraw(plyr->obj, plyr->cur_frame, plyr->cur_flip);
 }
 
+
+
+
 void PlayerUpdate(struct Player* plyr){
     int player_inpts;
-    coordinate delta;
     char switch_flip=0;
     char index;
-    delta.b.msb = 0;
-    delta.b.lsb = 10;
+
     switch (plyr->player_num)
     {
       case PLYR_ONE_ID:
@@ -103,7 +92,7 @@ void PlayerUpdate(struct Player* plyr){
                 break;
         }
     }
-    else if(player_inpts & INPUT_MASK_LEFT){
+    if(player_inpts & INPUT_MASK_LEFT){
         switch (plyr->cur_flip)
         {
             case SPRITE_FLIP_NONE:
@@ -115,25 +104,25 @@ void PlayerUpdate(struct Player* plyr){
                 break;
 
             case SPRITE_FLIP_Y:
-                index += 1;
                 if(index==7){
                     plyr->cur_flip = SPRITE_FLIP_NONE;
                     break;
                 }
+                index += 1;
                 break;
             case SPRITE_FLIP_BOTH:
-                index -= 1;
                 if(index==0){
                     plyr->cur_flip = SPRITE_FLIP_Y;
                     break;
                 }
+                index -= 1;
                 break;        
             case SPRITE_FLIP_X:
-                index += 1;
                 if(index==7){
                     plyr->cur_flip = SPRITE_FLIP_BOTH;
                     break;
                 }
+                index += 1;
                 break;
         }
         switch(plyr->player_num){
@@ -145,15 +134,10 @@ void PlayerUpdate(struct Player* plyr){
                 break;
         }
     }
- 
- /*
-    if(player_inpts & INPUT_MASK_UP) {
-          plyr->obj->v_y.i += delta.i;
-    }
-    else if(player_inpts & INPUT_MASK_DOWN) {
-          plyr->obj->v_y.i -= delta.i;
-    } 
 
- */ 
+    if(player_inpts & INPUT_MASK_UP) {
+        plyr->obj->v_x = gen_x_velocity(index, plyr->cur_flip);
+        plyr->obj->v_y = gen_y_velocity(index, plyr->cur_flip);   
+    }
 
 }

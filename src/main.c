@@ -25,8 +25,8 @@ int main () {
 
     load_spritesheet(&ASSET__Small__Small_bmp, SMALL_BANK);
 
-    players[PLYR_ONE_ID] =  initPlayer(  col,  row, 2, PLYR_ONE_ID);
-    players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, 2, PLYR_TWO_ID);
+    players[PLYR_ONE_ID] =  initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID);
+    players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID);
 
     while (1) {                                     //  Run forever
         clear_screen(0);

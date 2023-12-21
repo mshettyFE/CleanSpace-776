@@ -1,6 +1,7 @@
 #ifndef PLAYER
 #define PLAYER
 
+#include "coordinate.h"
 #include "object.h"
 #include "input.h"
 
@@ -18,10 +19,13 @@ struct Player{
     char plyr_index;
 };
 
-struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num);
+struct Player* initPlayer(char a_x,  char a_y, char a_bank, char a_player_num);
 
 void DrawPlayer(struct Player* plyr);
 
 void PlayerUpdate(struct Player* plyr);
+
+coordinate gen_x_velocity(char a_frame, char a_flip);
+coordinate gen_y_velocity(char a_frame, char a_flip);
 
 #endif
