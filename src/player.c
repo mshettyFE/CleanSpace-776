@@ -18,22 +18,25 @@ struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num)
     if(plyr->player_num == PLYR_ONE_ID)
     {
         plyr->cur_frame = PLAYER_ONE_STRT_FRAME;
-        plyr->plyr_index = 255;
     }
     else{
         plyr->cur_frame = PLAYER_TWO_STRT_FRAME;
-        plyr->plyr_index = 255;
     }
     plyr->cur_flip = SPRITE_FLIP_NONE;
     return plyr;
 }
 
+void freePlayer(struct Player* plyr){
+    if(plyr == NULL){
+        return;
+    }
+    freeObj(plyr->obj);
+    free(plyr);
+}
+
 void DrawPlayer(struct Player* plyr){
     ObjectDraw(plyr->obj, plyr->cur_frame, plyr->cur_flip);
 }
-
-
-
 
 void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
     int player_inpts;
@@ -168,4 +171,6 @@ void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
 */
     }
 
+    MoveObject(plyr->obj);
+    DrawPlayer(plyr);
 }

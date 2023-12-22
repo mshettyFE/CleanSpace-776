@@ -24,6 +24,10 @@ struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  
 struct Object* initObjectCoord( const coordinate a_x, const  coordinate a_y, const  coordinate a_v_x,  const coordinate a_v_y, const  char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank);
 
+void freeObj(struct Object* obj);
+
+void updateObject(struct Object* obj);
+
 void ObjectDraw(struct Object* obj, char a_frame, char a_flip);
 
 void MoveObject(struct Object* obj);

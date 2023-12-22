@@ -49,7 +49,6 @@ coordinate getSpeedSquared(struct Object* obj){
   return output;
 }
 
-
 void freeObj(struct Object* obj){
   freeAABB(obj->bounding_box);
   free(obj);
