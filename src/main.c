@@ -3,7 +3,8 @@
 #include "gen/assets/Small.h"
 #include "object.h"
 #include "player.h"
-#include "constants.h"
+#include "globals.h"
+#include "Tree.h"
 #include <stdlib.h>
 
 int main () {
@@ -11,10 +12,21 @@ int main () {
     char col_two = 60, row_two = 40;
     char dx = 1, dy = 1;
     char cur_frame = 0;
-    coordinate MAX_SPEED_SQUARED;
-    struct Player* players[2];
+    coordinate max_speed_squared;
+    struct Player* players[3];
+    struct Node* temp;
+    struct Node* temp2;
+    struct Object* cur_obj;
+    struct Head* objTree;
+    struct Head* oldNodes;
+    struct Head* newNodes;
 
-    MAX_SPEED_SQUARED = gen_coord(1,0);
+    counter = 0;
+
+    max_speed_squared = gen_coord(1,0);
+    objTree = initHead();
+    oldNodes = initHead();
+    newNodes = initHead();
 
     init_graphics();
 
@@ -29,17 +41,32 @@ int main () {
 
     players[PLYR_ONE_ID] =  initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID);
     players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID);
+    players[2] =            initPlayer( 45, 45, SMALL_BANK, PLYR_ONE_ID);
 
-    while (1) {                                     //  Run forever
+    insert(objTree,players[PLYR_ONE_ID],OBJ_PLAYER_ID);
+    insert(objTree,players[PLYR_TWO_ID],OBJ_PLAYER_ID);
+
+    while (1) {               //  Run forever
         clear_screen(0);
         clear_border(0);
         update_inputs();
-        PlayerUpdate(players[0], MAX_SPEED_SQUARED);
-        PlayerUpdate(players[1], MAX_SPEED_SQUARED);
-        MoveObject(players[0]->obj);
-        MoveObject(players[1]->obj);
-        DrawPlayer(players[0]);
-        DrawPlayer(players[1]);
+
+// iterate through object list. For each item in the object list, update state of object. This includes adding to list(s) of objects to create or delete
+// update screen with objects (ignore what needs to be added/deleted for now)
+// For each new object to be created, add to the tree
+// For each new object to be deleted, remove from the tree
+
+        temp = search(objTree, players[PLYR_ONE_ID]);
+        temp2 = search(objTree, players[PLYR_TWO_ID]);
+
+        if(temp != NULL){
+          UpdatePlayer((struct Player*)temp->obj, NULL, NULL);
+        }
+
+        if(temp2 != NULL){
+          UpdatePlayer((struct Player*)temp2->obj, NULL, NULL);
+        }
+
         await_draw_queue();
         sleep(1);
         flip_pages();

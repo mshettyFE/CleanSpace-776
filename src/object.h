@@ -16,21 +16,19 @@ struct Object{
   const char **sprite_table;
   char sprite_table_bank;
   char bank;
+  char cur_frame;
+  char cur_flip;
 };
 
 struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  const char a_v_y, const  char a_size,
-  const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank);
+  const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank, const char a_cur_frame, const char a_cur_flip);
 
 struct Object* initObjectCoord( const coordinate a_x, const  coordinate a_y, const  coordinate a_v_x,  const coordinate a_v_y, const  char a_size,
-  const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank);
+  const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank , const char a_cur_frame, const char a_cur_flip);
 
 void freeObj(struct Object* obj);
 
 void updateObject(struct Object* obj);
-
-void ObjectDraw(struct Object* obj, char a_frame, char a_flip);
-
-void MoveObject(struct Object* obj);
 
 coordinate getSpeedSquared(struct Object* obj);
 

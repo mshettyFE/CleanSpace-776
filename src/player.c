@@ -13,16 +13,30 @@ signed int cur_speed = 0;
 
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
-    plyr->obj = initObject( a_x, a_y, 0, 0, 4, &ASSET__Small__Small_json, a_bank);
     plyr->player_num = a_player_num;
+    switch (plyr->player_num)
+    {
+    case PLYR_ONE_ID:
+        plyr->obj = initObject( a_x, a_y, 0, 0, 4, &ASSET__Small__Small_json, a_bank, PLAYER_ONE_STRT_FRAME, SPRITE_FLIP_NONE);
+        break;
+    case PLYR_TWO_ID:
+        plyr->obj = initObject( a_x, a_y, 0, 0, 4, &ASSET__Small__Small_json, a_bank, PLAYER_TWO_STRT_FRAME, SPRITE_FLIP_NONE);
+        break;    
+    default:
+        break;
+    }
+/*
+    if(plyr->player_num == PLYR_ONE_ID)
+    plyr->obj = initObject( a_x, a_y, 0, 0, 4, &ASSET__Small__Small_json, a_bank);
     if(plyr->player_num == PLYR_ONE_ID)
     {
-        plyr->cur_frame = PLAYER_ONE_STRT_FRAME;
+        plyr->obj->cur_frame = PLAYER_ONE_STRT_FRAME;
     }
     else{
-        plyr->cur_frame = PLAYER_TWO_STRT_FRAME;
+        plyr->obj->cur_frame = PLAYER_TWO_STRT_FRAME;
     }
-    plyr->cur_flip = SPRITE_FLIP_NONE;
+    plyr->obj->cur_flip = SPRITE_FLIP_NONE;
+*/
     return plyr;
 }
 
@@ -34,11 +48,7 @@ void freePlayer(struct Player* plyr){
     free(plyr);
 }
 
-void DrawPlayer(struct Player* plyr){
-    ObjectDraw(plyr->obj, plyr->cur_frame, plyr->cur_flip);
-}
-
-void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
+void UpdatePlayer(struct Player* plyr, struct  Head* new_nodes, struct Head* expired_nodes){
     int player_inpts;
     char switch_flip=0;
     char index;
@@ -49,21 +59,21 @@ void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
     {
       case PLYR_ONE_ID:
         player_inpts = player1_buttons;
-        index = plyr->cur_frame - PLAYER_ONE_STRT_FRAME;
+        index = plyr->obj->cur_frame - PLAYER_ONE_STRT_FRAME;
         break;
       case PLYR_TWO_ID:
         player_inpts = player2_buttons;
-        index = plyr->cur_frame - PLAYER_TWO_STRT_FRAME;
+        index = plyr->obj->cur_frame - PLAYER_TWO_STRT_FRAME;
         break;    
     }
 
     if(player_inpts & INPUT_MASK_RIGHT){
-        switch (plyr->cur_flip)
+        switch (plyr->obj->cur_flip)
         {
             case SPRITE_FLIP_NONE:
                 index += 1;
                 if(index==7){
-                    plyr->cur_flip = SPRITE_FLIP_Y;
+                    plyr->obj->cur_flip = SPRITE_FLIP_Y;
                     break;
                 }
                 break;
@@ -71,40 +81,40 @@ void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
             case SPRITE_FLIP_Y:
                 index -= 1;
                 if(index==0){
-                    plyr->cur_flip = SPRITE_FLIP_BOTH;
+                    plyr->obj->cur_flip = SPRITE_FLIP_BOTH;
                     break;
                 }
                 break;
             case SPRITE_FLIP_BOTH:
                 index += 1;
                 if(index==7){
-                    plyr->cur_flip = SPRITE_FLIP_X;
+                    plyr->obj->cur_flip = SPRITE_FLIP_X;
                     break;
                 }
                 break;        
             case SPRITE_FLIP_X:
                 index -= 1;
                 if(index==0){
-                    plyr->cur_flip = SPRITE_FLIP_NONE;
+                    plyr->obj->cur_flip = SPRITE_FLIP_NONE;
                     break;
                 }
                 break;
         }
         switch(plyr->player_num){
             case PLYR_ONE_ID:
-                plyr->cur_frame = index + PLAYER_ONE_STRT_FRAME;
+                plyr->obj->cur_frame = index + PLAYER_ONE_STRT_FRAME;
                 break;
             case PLYR_TWO_ID:
-                plyr->cur_frame = index + PLAYER_TWO_STRT_FRAME;
+                plyr->obj->cur_frame = index + PLAYER_TWO_STRT_FRAME;
                 break;
         }
     }
     if(player_inpts & INPUT_MASK_LEFT){
-        switch (plyr->cur_flip)
+        switch (plyr->obj->cur_flip)
         {
             case SPRITE_FLIP_NONE:
                 if(index==0){
-                    plyr->cur_flip = SPRITE_FLIP_X;
+                    plyr->obj->cur_flip = SPRITE_FLIP_X;
                     break;
                 }
                 index -= 1;
@@ -112,21 +122,21 @@ void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
 
             case SPRITE_FLIP_Y:
                 if(index==7){
-                    plyr->cur_flip = SPRITE_FLIP_NONE;
+                    plyr->obj->cur_flip = SPRITE_FLIP_NONE;
                     break;
                 }
                 index += 1;
                 break;
             case SPRITE_FLIP_BOTH:
                 if(index==0){
-                    plyr->cur_flip = SPRITE_FLIP_Y;
+                    plyr->obj->cur_flip = SPRITE_FLIP_Y;
                     break;
                 }
                 index -= 1;
                 break;        
             case SPRITE_FLIP_X:
                 if(index==7){
-                    plyr->cur_flip = SPRITE_FLIP_BOTH;
+                    plyr->obj->cur_flip = SPRITE_FLIP_BOTH;
                     break;
                 }
                 index += 1;
@@ -134,16 +144,16 @@ void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
         }
         switch(plyr->player_num){
             case PLYR_ONE_ID:
-                plyr->cur_frame = index + PLAYER_ONE_STRT_FRAME;
+                plyr->obj->cur_frame = index + PLAYER_ONE_STRT_FRAME;
                 break;
             case PLYR_TWO_ID:
-                plyr->cur_frame = index + PLAYER_TWO_STRT_FRAME;
+                plyr->obj->cur_frame = index + PLAYER_TWO_STRT_FRAME;
                 break;
         }
     }
 
-    acceleration_x = gen_x_accel(index,plyr->cur_flip);
-    acceleration_y = gen_y_accel(index,plyr->cur_flip);
+    acceleration_x = gen_x_accel(index,plyr->obj->cur_flip);
+    acceleration_y = gen_y_accel(index,plyr->obj->cur_flip);
 
     cur_speed = plyr->obj->v_y.i;
     
@@ -171,6 +181,6 @@ void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
 */
     }
 
-    MoveObject(plyr->obj);
-    DrawPlayer(plyr);
+    updateObject(plyr->obj);
+
 }
