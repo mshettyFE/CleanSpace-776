@@ -13,8 +13,8 @@ int main () {
     char cur_frame = 0;
     coordinate MAX_SPEED_SQUARED;
     struct Player* players[2];
-    MAX_SPEED_SQUARED = gen_coord(9,0);
 
+    MAX_SPEED_SQUARED = gen_coord(1,0);
 
     init_graphics();
 

@@ -9,6 +9,8 @@
 
 #include "gen/assets/Small.h"
 
+signed int cur_speed = 0;
+
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
     plyr->obj = initObject( a_x, a_y, 0, 0, 4, &ASSET__Small__Small_json, a_bank);
@@ -140,9 +142,30 @@ void PlayerUpdate(struct Player* plyr, const coordinate max_speed_squared){
     acceleration_x = gen_x_accel(index,plyr->cur_flip);
     acceleration_y = gen_y_accel(index,plyr->cur_flip);
 
+    cur_speed = plyr->obj->v_y.i;
+    
     if(player_inpts & INPUT_MASK_UP) {
-        plyr->obj->v_x = acceleration_x;
-        plyr->obj->v_y = acceleration_y;   
+          plyr->obj->v_x.i = acceleration_x.i;
+          plyr->obj->v_y.i = acceleration_y.i;
+    }
+
+    if(player_inpts & INPUT_MASK_DOWN) {
+          plyr->obj->v_x.i = -1*acceleration_x.i;
+          plyr->obj->v_y.i = -1*acceleration_y.i;
+/*
+        char sign_change_x, sign_change_y;
+        coordinate old_vx, old_vy;
+        old_vx = plyr->obj->v_x;
+        old_vy = plyr->obj->v_y;
+        plyr->obj->v_x.i -= acceleration_x.i;
+        plyr->obj->v_y.i -= acceleration_y.i;
+        sign_change_x = old_vx.i < 0 && plyr->obj->v_x.i >= 0 || old_vx.i >= 0 && plyr->obj->v_x.i < 0; 
+        sign_change_y = old_vy.i < 0 && plyr->obj->v_y.i >= 0 || old_vy.i >= 0 && plyr->obj->v_y.i < 0; 
+        if (sign_change_x || sign_change_y) {
+            plyr->obj->v_x.i -= acceleration_x.i;
+            plyr->obj->v_y.i -= acceleration_y.i;
+        }
+*/
     }
 
 }
