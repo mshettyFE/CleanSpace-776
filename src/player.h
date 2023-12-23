@@ -21,11 +21,11 @@ extern coordinate max_speed_squared;
 
 struct Player{
     struct Object* obj;
-    char player_num;
+    unsigned char player_num;
     unsigned char bullet_timer;
 };
 
-struct Player* initPlayer(char a_x,  char a_y, char a_bank, char a_player_num);
+struct Player* initPlayer(char a_x,  char a_y, char a_bank, unsigned char a_player_num);
 
 void freePlayer(struct Player* plyr);
 

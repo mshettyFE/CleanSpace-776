@@ -12,14 +12,17 @@
 
 #define BULLET_FRAME_COUNTER 30
 #define BULLET_FRAME_DELTA 4
+#define BULLET_LIFETIME 180
 
 struct Bullet{
     struct Object* obj;
     unsigned char frame_toggle;
     unsigned char display_counter;
+    unsigned char lifetime;
 };
 
-struct Bullet* initBullet(  const signed int  a_x,  const signed int  a_y, const signed int  a_v_x, const signed int  a_v_y, char a_bank, char origin);
+struct Bullet* initBullet(const coordinate* a_x,  const coordinate* a_y, const coordinate*  a_v_x, const  coordinate* a_v_y, char a_bank, char origin);
+//struct Bullet* initBullet(const signed int a_x,  const signed int a_y, const signed int  a_v_x, const signed int a_v_y, char a_bank, char origin);
 
 void freeBullet(struct Bullet* blt);
 

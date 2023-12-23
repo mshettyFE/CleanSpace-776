@@ -7,7 +7,7 @@ int player2_buttons = 0, player2_old_buttons = 0;
 #pragma optimize (push, off)
 void update_inputs(){
     char inputsA, inputsB;
-    inputsA = *gamepad_2;
+
     inputsA = *gamepad_1;
     inputsB = *gamepad_1;
 
