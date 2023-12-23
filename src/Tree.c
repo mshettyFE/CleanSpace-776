@@ -151,6 +151,7 @@ void freeNode(struct Node* node){
     if(node == NULL){
         return;
     }
+
     switch (node->obj_id)
     {
     case OBJ_PLAYER_ID:
@@ -159,9 +160,6 @@ void freeNode(struct Node* node){
     case OBJ_BULLET_ID:
         freeBullet((struct Bullet * ) node->obj);
         break;    
-    default:
-        freeObj( (struct Object *)  node->obj);
-        break;
     }
     free(node);
 }
@@ -207,25 +205,6 @@ struct Node* searchWork(struct Node* cur_node, struct Node* search_node){
         return right;
     }
     return NULL;
-}
-
-void clearAll(struct Head* tree, unsigned char clear_data){
-  clearAllWork(tree, tree->root, clear_data);
-}
-
-void clearAllWork(struct Head* tree, struct Node* cur, unsigned char clear_data){
-  if(cur != NULL){
-    clearAllWork(tree, cur->left, clear_data);
-    clearAllWork(tree, cur->right, clear_data);
-    if(clear_data==DONT_CLEAR_DATA){
-    // only clear 
-      free(cur);     
-    }
-    else{
-      freeNode(cur);
-    }
-    tree->size -= 1;
-  }
 }
 
 struct Node* delete(struct Head* tree, unsigned int id){
@@ -308,20 +287,20 @@ struct Node *deleteWork(struct Node *cur_node, struct Node* del_node) {
 }
 
 void pollObjects(struct Head* tree, struct Head* new, struct Head* old){
-  pollObjectsWork(tree->root, new, old);
+  pollObjectsWork(tree->root, tree, new, old);
 }
 
-void pollObjectsWork(struct Node* cur, struct Head* new, struct Head* old){
+void pollObjectsWork(struct Node* cur, struct Head* tree, struct Head* new, struct Head* old){
   if(cur != NULL){
-    pollObjectsWork(cur->left, new, old);
-    pollObjectsWork(cur->right, new, old);
+    pollObjectsWork(cur->left, tree, new, old);
+    pollObjectsWork(cur->right, tree, new, old);
     switch (cur->obj_id)
     {
       case OBJ_PLAYER_ID:
-        UpdatePlayer((struct Player *) cur->obj, new, old);
+        UpdatePlayer((struct Player *) cur->obj, tree, new, old);
         break;
       case OBJ_BULLET_ID:
-        UpdateBullet((struct Bullet *) cur->obj, new, old);
+        UpdateBullet((struct Bullet *) cur->obj, tree, new, old);
         break;
       default:
         break;
@@ -330,12 +309,16 @@ void pollObjectsWork(struct Node* cur, struct Head* new, struct Head* old){
 }
 
 void TransferNodes(struct Head* dest, struct Head* src){
-  TransferNodesWork(dest, src->root);
+    dest->root = TransferNodesWork(dest, dest->root, src->root);
+    free(src);
+    src = initHead();
 }
-void TransferNodesWork(struct Head* dest, struct Node* cur){
+
+struct Node* TransferNodesWork(struct Head* dest_head, struct Node* cur_dest, struct Node* cur){
   if(cur != NULL){
-    TransferNodesWork(dest, cur->left);
-    TransferNodesWork(dest, cur->right);
-    insertDirect(dest,cur);
+    cur_dest = insertDirect(dest_head, cur);
+    cur_dest = TransferNodesWork(dest_head, cur_dest, cur->left);
+    cur_dest = TransferNodesWork(dest_head,cur_dest, cur->right);
   }
+  return cur_dest;
 }

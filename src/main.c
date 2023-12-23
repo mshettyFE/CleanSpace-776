@@ -8,6 +8,10 @@
 #include "Tree.h"
 #include <stdlib.h>
 
+unsigned int XXXXXXXXXXXXXXXXXXXXXXXXXXX;
+unsigned int YYYYYYYYYYYYYYYYYYYYYYYYYYY;
+void ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ(){};
+
 int main () {
     char col = 30, row = 20;
     char col_two = 60, row_two = 40;
@@ -57,15 +61,15 @@ int main () {
 // For each new object to be created, add to the tree
 // For each new object to be deleted, remove from the tree
 
-//        pollObjects(objTree, nodes_to_remove, nodes_to_add);
-        pollObjects(objTree, objTree, nodes_to_add);
+        pollObjects(objTree, objTree, nodes_to_remove );
 
         await_draw_queue();
         sleep(1);
         flip_pages();
         ++cur_frame;
+        XXXXXXXXXXXXXXXXXXXXXXXXXXX = objTree->size;
 //        TransferNodes(objTree,nodes_to_add);
-//        clearAll(nodes_to_add,DONT_CLEAR_DATA);
+        ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ();
     }
 
   return (0);                                     //  We should never get here!

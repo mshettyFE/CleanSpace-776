@@ -20,13 +20,13 @@ struct Object{
   char cur_flip;
 };
 
-struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  const char a_v_y, const  char a_size,
+struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  const char a_v_y, const  unsigned char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank, const char a_cur_frame, const char a_cur_flip);
 
-struct Object* initObjectInt( const signed int a_x, const  signed int  a_y, const  signed int  a_v_x,  const signed int  a_v_y, const  char a_size,
+struct Object* initObjectInt( const signed int a_x, const  signed int  a_y, const  signed int  a_v_x,  const signed int  a_v_y, const unsigned char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank , const char a_cur_frame, const char a_cur_flip);
 
-struct Object* initObjectCoord( const coordinate*  a_x, const  coordinate* a_y, const  coordinate*  a_v_x,  const coordinate*  a_v_y, const  char a_size,
+struct Object* initObjectCoord( const coordinate*  a_x, const  coordinate* a_y, const  coordinate*  a_v_x,  const coordinate*  a_v_y, const unsigned char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank, const char a_cur_frame, const char a_cur_flip);
 
 void freeObj(struct Object* obj);

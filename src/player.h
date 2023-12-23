@@ -29,6 +29,6 @@ struct Player* initPlayer(char a_x,  char a_y, char a_bank, unsigned char a_play
 
 void freePlayer(struct Player* plyr);
 
-void UpdatePlayer(struct Player* plyr, struct  Head* new_nodes, struct Head* expired_nodes);
+void UpdatePlayer(struct Player* plyr, struct Head* cur_nodes, struct  Head* new_nodes, struct Head* expired_nodes);
 
 #endif

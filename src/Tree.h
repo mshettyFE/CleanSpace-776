@@ -53,16 +53,13 @@ struct Node *insertWork(struct Node *node, struct Node *new_node);
 struct Node* search(struct Head* tree,void* a_obj, unsigned char a_obj_id);
 struct Node* searchWork(struct Node* cur_node, struct Node* search_node);
 
-void clearAll(struct Head* tree, unsigned char clear_data);
-void clearAllWork(struct Head* tree, struct Node* cur, unsigned char clear_data);
-
 struct Node* delete(struct Head* tree, unsigned int id);
 struct Node *deleteWork(struct Node *cur_node, struct Node* del_node);
 
-void pollObjects(struct Head* tree, struct Head* old, struct Head* new);
-void pollObjectsWork(struct Node* cur, struct Head* old, struct Head* new);
+void pollObjects(struct Head* tree, struct Head* new, struct Head* old);
+void pollObjectsWork(struct Node* cur, struct Head* cur_nodes, struct Head* new, struct Head* old);
 
 void TransferNodes(struct Head* dest, struct Head* src);
-void TransferNodesWork(struct Head* dest, struct Node* cur);
+struct Node* TransferNodesWork(struct Head* dest_head, struct Node* cur_dest, struct Node* cur);
 
 #endif

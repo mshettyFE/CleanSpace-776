@@ -37,7 +37,7 @@ void freePlayer(struct Player* plyr){
     free(plyr);
 }
 
-void UpdatePlayer(struct Player* plyr, struct  Head* new_nodes, struct Head* expired_nodes){
+void UpdatePlayer(struct Player* plyr, struct Head* cur_nodes ,struct  Head* new_nodes, struct Head* expired_nodes){
     int player_inpts;
     char switch_flip=0;
     char index;
@@ -169,7 +169,6 @@ void UpdatePlayer(struct Player* plyr, struct  Head* new_nodes, struct Head* exp
             insert(new_nodes, blt, OBJ_BULLET_ID);
         }
     }
-
 
    updateObject(plyr->obj);
 

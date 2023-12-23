@@ -3,11 +3,6 @@
 #include "Bullet.h"
 #include "player.h"
 
-signed int XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX;
-signed int YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY;
-
-void    ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ(){};
-
 struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const coordinate*  a_v_x, const coordinate* a_v_y, char a_bank, char origin){
     struct Bullet* blt = malloc(sizeof(struct Bullet));
     blt->frame_toggle = 0;
@@ -31,7 +26,7 @@ void freeBullet(struct Bullet* blt){
     free(blt);
 }
 
-void UpdateBullet(struct Bullet* blt, struct  Head* new_nodes, struct Head* expired_nodes){
+void UpdateBullet(struct Bullet* blt, struct Head* cur_nodes, struct  Head* new_nodes, struct Head* expired_nodes){
     blt->display_counter -= 1;
     if(blt->display_counter == 0){
         blt->display_counter = BULLET_FRAME_COUNTER;

@@ -26,6 +26,6 @@ struct Bullet* initBullet(const coordinate* a_x,  const coordinate* a_y, const c
 
 void freeBullet(struct Bullet* blt);
 
-void UpdateBullet(struct Bullet* blt, struct  Head* new_nodes, struct Head* expired_nodes);
+void UpdateBullet(struct Bullet* blt, struct Head* cur_nodes, struct  Head* new_nodes, struct Head* expired_nodes);
 
 #endif
