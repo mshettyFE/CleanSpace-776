@@ -1,8 +1,6 @@
 #include "Tree.h"
 #include <stdlib.h>
-
-#include "player.h"
-#include "Bullet.h"
+#include <stdio.h>
 
 // AVL tree implementation in C. Adapted from https://www.programiz.com/dsa/avl-tree
 
@@ -11,6 +9,33 @@ struct Head* initHead(){
     output->root = NULL;
     output->size = 0;
     return output;
+}
+
+void traverseTree(struct Head* tree){
+  if(tree!=NULL && tree->root != NULL){
+    viewBranch(tree->root);  
+  }
+}
+
+void viewBranch(struct Node* node){
+  if(node != NULL){
+    viewBranch(node->left);
+    viewBranch(node->right);
+    printf("%s\n", ((struct Player*) node->obj)->object->string);
+  }
+}
+
+void clearAll(struct Head* tree){
+  clearAllWork(tree, tree->root);
+}
+
+void clearAllWork(struct Head* tree, struct Node* cur){
+  if(cur != NULL){
+    clearAllWork(tree, cur->left);
+    clearAllWork(tree, cur->right);
+    freeNode(cur);
+    tree->size -= 1;
+  }
 }
 
 int max(int a, int b) {
@@ -93,6 +118,7 @@ struct Node *insert(struct Head* tree,void* a_obj, unsigned char a_obj_id){
     return new_node;
 }
 
+// Insert node
 struct Node *insertNode(struct Node *node, struct Node *new_node) {
   int balance;
   // Find the correct position to insertNode the node and insertNode it
@@ -138,12 +164,6 @@ struct Node *insertNode(struct Node *node, struct Node *new_node) {
   return node;
 }
 
-struct Node *insertDirect(struct Head* tree, struct Node* node){
-    tree->root = insertNode(tree->root, node);
-    tree->size += 1;
-    return node;
-}
-
 void freeNode(struct Node* node){
     if(node == NULL){
         return;
@@ -153,9 +173,6 @@ void freeNode(struct Node* node){
     case OBJ_PLAYER_ID:
         freePlayer((struct Player * ) node->obj);
         break;    
-    case OBJ_BULLET_ID:
-        freeBullet((struct Player * ) node->obj);
-        break;    
     default:
         freeObj( (struct Object *)  node->obj);
         break;
@@ -163,7 +180,7 @@ void freeNode(struct Node* node){
     free(node);
 }
 
-struct Node* search(struct Head* tree, void* a_obj, unsigned char a_obj_id){
+struct Node* search(struct Head* tree,struct Player* plyr){
     struct Node* tempNode;
     struct Node* result;
 
@@ -174,8 +191,7 @@ struct Node* search(struct Head* tree, void* a_obj, unsigned char a_obj_id){
     if(tree->root==NULL){
       return NULL;
     }
-
-    tempNode = newNode(a_obj, a_obj_id);
+    tempNode = newNode(plyr, OBJ_PLAYER_ID);
     result = searchNode(tree->root, tempNode);
     // only freeing Node, not the underlying data.
     // This is fine, since the node is temporary, but the data is persistent
@@ -206,20 +222,6 @@ struct Node* searchNode(struct Node* cur_node, struct Node* search_node){
     return NULL;
 }
 
-void clearAll(struct Head* tree){
-  clearAllWork(tree, tree->root);
-}
-
-void clearAllWork(struct Head* tree, struct Node* cur){
-  if(cur != NULL){
-    clearAllWork(tree, cur->left);
-    clearAllWork(tree, cur->right);
-    freeNode(cur);
-    tree->size -= 1;
-  }
-}
-
-
 
 struct Node* delete(struct Head* tree, unsigned int id){
     struct Node* search_Node;
@@ -233,9 +235,7 @@ struct Node* delete(struct Head* tree, unsigned int id){
     search_Node = newNode(NULL, OBJ_PLAYER_ID);
     search_Node->node_id = id;
     result = deleteNode(tree->root, search_Node);
-    if(result != NULL){
-      tree->size -= 1;
-    }
+    tree->size -= 1;
     free(search_Node);
     return result;
 }

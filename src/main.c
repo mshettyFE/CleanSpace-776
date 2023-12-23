@@ -20,6 +20,7 @@ int main () {
     struct Head* objTree;
     struct Head* oldNodes;
     struct Head* newNodes;
+    struct Head* DeathAnimations;
 
     counter = 0;
 
@@ -27,6 +28,7 @@ int main () {
     objTree = initHead();
     oldNodes = initHead();
     newNodes = initHead();
+    DeathAnimations = initHead();
 
     init_graphics();
 
@@ -56,8 +58,8 @@ int main () {
 // For each new object to be created, add to the tree
 // For each new object to be deleted, remove from the tree
 
-        temp = search(objTree, players[PLYR_ONE_ID]);
-        temp2 = search(objTree, players[PLYR_TWO_ID]);
+        temp = search(objTree, players[PLYR_ONE_ID], OBJ_PLAYER_ID);
+        temp2 = search(objTree, players[PLYR_TWO_ID], OBJ_PLAYER_ID);
 
         if(temp != NULL){
           UpdatePlayer((struct Player*)temp->obj, NULL, NULL);

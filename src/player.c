@@ -4,16 +4,19 @@
 #include "input.h"
 #include "drawing_funcs.h"
 #include "coordinate.h"
+#include "globals.h"
 
 #include <stdlib.h>
 
 #include "gen/assets/Small.h"
+#include "Bullet.h"
 
 signed int cur_speed = 0;
 
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
     plyr->player_num = a_player_num;
+    plyr->bullet_timer = BULLET_COOLDOWN;
     switch (plyr->player_num)
     {
     case PLYR_ONE_ID:
@@ -179,6 +182,11 @@ void UpdatePlayer(struct Player* plyr, struct  Head* new_nodes, struct Head* exp
             plyr->obj->v_y.i -= acceleration_y.i;
         }
 */
+    }
+
+    if(player_inpts & INPUT_MASK_A) {
+        struct Bullet* blt = initBullet(plyr->obj->x.i, plyr->obj->y.i, plyr->obj->v_x.i, plyr->obj->v_y.i, BULLET_BANK,plyr->player_num);
+        insert(new_nodes, blt, OBJ_BULLET_ID);
     }
 
     updateObject(plyr->obj);

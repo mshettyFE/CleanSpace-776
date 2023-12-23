@@ -13,6 +13,8 @@ typedef union coordinate {
 
 coordinate gen_coord(signed char msb, unsigned char lsb);
 
+coordinate gen_coord_int(signed int i);
+
 coordinate gen_x_accel(const char a_frame, const char a_flip);
 
 coordinate gen_y_accel(const char a_frame, const char a_flip);

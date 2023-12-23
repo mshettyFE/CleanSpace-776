@@ -22,13 +22,13 @@ struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  
     return output;
 }
 
-struct Object* initObjectCoord( const coordinate a_x, const  coordinate a_y, const  coordinate a_v_x,  const coordinate a_v_y, const  char a_size,
+struct Object* initObjectCoord( const signed int  a_x, const  signed int  a_y, const  signed int  a_v_x,  const signed int  a_v_y, const  char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank, const char a_cur_frame, const char a_cur_flip){
     struct Object *output = malloc(sizeof(struct Object));
-    output->x = a_x;
-    output->y = a_y;
-    output->v_x = a_v_x;
-    output->v_y = a_v_y;
+    output->x.i = a_x;
+    output->y.i = a_y;
+    output->v_x.i = a_v_x;
+    output->v_y.i = a_v_y;
     output->bounding_box = initAABB(output->x,output->y,a_size);
     output->sprite_table = a_sprite_table;
     output->sprite_table_bank = a_sprite_table_bank;

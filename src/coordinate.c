@@ -13,6 +13,14 @@ coordinate gen_coord(const signed char msb, const  unsigned char lsb){
     output.b.lsb = lsb;
     return output;
 }
+
+coordinate gen_coord_int(const signed int i){
+    coordinate output;
+    output.i= i;
+    return output;
+}
+
+
 coordinate gen_x_accel(const char a_frame, const char a_flip){
 /*
   NONE: <1,1> => <1,-1>

@@ -2,6 +2,7 @@
 #define BINARY_TREE
 
 #include "object.h"
+#include "player.h"
 
 extern unsigned int counter;
 
@@ -39,19 +40,22 @@ struct Head{
 
 struct Head* initHead();
 
+
+void traverseTree(struct Head* tree);
+void viewBranch(struct Node* node);
+
+void clearAll(struct Head* tree);
+void clearAllWork(struct Head* tree, struct Node* cur);
+
 int get_depth(struct Head* tree);
 
 int max(int a, int b);
 
 struct Node *insert(struct Head* tree,void* a_obj, unsigned char a_obj_id);
-struct Node *insertDirect(struct Head* tree, struct Node* node);
 struct Node *insertNode(struct Node *node, struct Node *new_node);
 
-struct Node* search(struct Head* tree,void* a_obj, unsigned char a_obj_id);
+struct Node* search(struct Head* tree,struct Player* plyr);
 struct Node* searchNode(struct Node* cur_node, struct Node* search_node);
-
-void clearAll(struct Head* tree);
-void clearAllWork(struct Head* tree, struct Node* cur);
 
 struct Node* delete(struct Head* tree, unsigned int id);
 struct Node *deleteNode(struct Node *cur_node, struct Node* del_node);

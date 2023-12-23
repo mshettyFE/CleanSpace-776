@@ -1,0 +1,28 @@
+#ifndef BULLET
+#define BULLET
+
+#include "coordinate.h"
+#include "object.h"
+#include "Tree.h"
+
+#define ORIGIN_P1 0
+#define ORIGIN_P2 1
+#define ORIGIN_STUPID 2
+#define ORIGIN_AGGRO 3
+
+#define BULLET_FRAME_COUNTER 30
+#define BULLET_FRAME_DELTA 4
+
+struct Bullet{
+    struct Object* obj;
+    unsigned char frame_toggle;
+    unsigned char display_counter;
+};
+
+struct Bullet* initBullet(  const signed int  a_x,  const signed int  a_y, const signed int  a_v_x, const signed int  a_v_y, char a_bank, char origin);
+
+void freeBullet(struct Bullet* blt);
+
+void UpdateBullet(struct Bullet* blt, struct  Head* new_nodes, struct Head* expired_nodes);
+
+#endif
