@@ -58,6 +58,10 @@ void UpdatePlayer(struct Player* plyr, struct  Head* new_nodes, struct Head* exp
     coordinate acceleration_x;
     coordinate acceleration_y;
 
+    if(plyr->bullet_timer >0){
+        plyr->bullet_timer -= 1;
+    }
+
     switch (plyr->player_num)
     {
       case PLYR_ONE_ID:
@@ -185,9 +189,12 @@ void UpdatePlayer(struct Player* plyr, struct  Head* new_nodes, struct Head* exp
     }
 
     if(player_inpts & INPUT_MASK_A) {
-        struct Bullet* blt = initBullet(plyr->obj->x.i, plyr->obj->y.i, plyr->obj->v_x.i, plyr->obj->v_y.i, BULLET_BANK,plyr->player_num);
-        insert(new_nodes, blt, OBJ_BULLET_ID);
+        if(plyr->bullet_timer == 0){
+            plyr->bullet_timer = BULLET_COOLDOWN;
+            insert(new_nodes, initBullet(plyr->obj->x.b.msb, plyr->obj->y.b.msb, plyr->obj->v_x.b.msb, plyr->obj->v_y.b.msb, BULLET_BANK,plyr->player_num), OBJ_BULLET_ID);
+        }
     }
+
 
     updateObject(plyr->obj);
 

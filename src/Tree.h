@@ -11,6 +11,9 @@ extern unsigned int counter;
 #define OBJ_BULLET_ID 3
 #define OBJ_DEATH_ID 4
 
+#define DONT_CLEAR_DATA 0
+#define CLEAR_DATA 1
+
 struct Node{
   void* obj;
   unsigned char obj_id;
@@ -45,15 +48,21 @@ int max(int a, int b);
 
 struct Node *insert(struct Head* tree,void* a_obj, unsigned char a_obj_id);
 struct Node *insertDirect(struct Head* tree, struct Node* node);
-struct Node *insertNode(struct Node *node, struct Node *new_node);
+struct Node *insertWork(struct Node *node, struct Node *new_node);
 
 struct Node* search(struct Head* tree,void* a_obj, unsigned char a_obj_id);
-struct Node* searchNode(struct Node* cur_node, struct Node* search_node);
+struct Node* searchWork(struct Node* cur_node, struct Node* search_node);
 
-void clearAll(struct Head* tree);
-void clearAllWork(struct Head* tree, struct Node* cur);
+void clearAll(struct Head* tree, unsigned char clear_data);
+void clearAllWork(struct Head* tree, struct Node* cur, unsigned char clear_data);
 
 struct Node* delete(struct Head* tree, unsigned int id);
-struct Node *deleteNode(struct Node *cur_node, struct Node* del_node);
+struct Node *deleteWork(struct Node *cur_node, struct Node* del_node);
+
+void pollObjects(struct Head* tree, struct Head* old, struct Head* new);
+void pollObjectsWork(struct Node* cur, struct Head* old, struct Head* new);
+
+void TransferNodes(struct Head* dest, struct Head* src);
+void TransferNodesWork(struct Head* dest, struct Node* cur);
 
 #endif

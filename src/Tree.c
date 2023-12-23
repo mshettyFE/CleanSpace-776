@@ -3,6 +3,9 @@
 
 #include "player.h"
 #include "Bullet.h"
+#include "globals.h"
+
+unsigned int counter = 0;
 
 // AVL tree implementation in C. Adapted from https://www.programiz.com/dsa/avl-tree
 
@@ -88,12 +91,12 @@ struct Node *minValueNode(struct Node *node) {
 
 struct Node *insert(struct Head* tree,void* a_obj, unsigned char a_obj_id){
     struct Node* new_node = newNode(a_obj, a_obj_id);
-    tree->root = insertNode(tree->root, new_node);
+    tree->root = insertWork(tree->root, new_node);
     tree->size += 1;
     return new_node;
 }
 
-struct Node *insertNode(struct Node *node, struct Node *new_node) {
+struct Node *insertWork(struct Node *node, struct Node *new_node) {
   int balance;
   // Find the correct position to insertNode the node and insertNode it
   if (node == NULL){
@@ -110,9 +113,9 @@ struct Node *insertNode(struct Node *node, struct Node *new_node) {
   }
 
   if (new_node->node_id < node->node_id)
-    node->left = insertNode(node->left, new_node);
+    node->left = insertWork(node->left, new_node);
   if (node->node_id < new_node->node_id)
-    node->right = insertNode(node->right, new_node);
+    node->right = insertWork(node->right, new_node);
 
   // Balance the tree
   node->height = 1 + max(height(node->left),
@@ -139,7 +142,7 @@ struct Node *insertNode(struct Node *node, struct Node *new_node) {
 }
 
 struct Node *insertDirect(struct Head* tree, struct Node* node){
-    tree->root = insertNode(tree->root, node);
+    tree->root = insertWork(tree->root, node);
     tree->size += 1;
     return node;
 }
@@ -154,7 +157,7 @@ void freeNode(struct Node* node){
         freePlayer((struct Player * ) node->obj);
         break;    
     case OBJ_BULLET_ID:
-        freeBullet((struct Player * ) node->obj);
+        freeBullet((struct Bullet * ) node->obj);
         break;    
     default:
         freeObj( (struct Object *)  node->obj);
@@ -176,7 +179,7 @@ struct Node* search(struct Head* tree, void* a_obj, unsigned char a_obj_id){
     }
 
     tempNode = newNode(a_obj, a_obj_id);
-    result = searchNode(tree->root, tempNode);
+    result = searchWork(tree->root, tempNode);
     // only freeing Node, not the underlying data.
     // This is fine, since the node is temporary, but the data is persistent
     free(tempNode);
@@ -184,7 +187,7 @@ struct Node* search(struct Head* tree, void* a_obj, unsigned char a_obj_id){
     return result;
 }
 
-struct Node* searchNode(struct Node* cur_node, struct Node* search_node){
+struct Node* searchWork(struct Node* cur_node, struct Node* search_node){
     struct Node* left;
     struct Node* right;
     if(cur_node==NULL){
@@ -195,8 +198,8 @@ struct Node* searchNode(struct Node* cur_node, struct Node* search_node){
         return cur_node;
     }
     
-    left = searchNode(cur_node->left, search_node);
-    right = searchNode(cur_node->right, search_node);
+    left = searchWork(cur_node->left, search_node);
+    right = searchWork(cur_node->right, search_node);
     if(left != NULL){
         return left;
     }
@@ -206,20 +209,24 @@ struct Node* searchNode(struct Node* cur_node, struct Node* search_node){
     return NULL;
 }
 
-void clearAll(struct Head* tree){
-  clearAllWork(tree, tree->root);
+void clearAll(struct Head* tree, unsigned char clear_data){
+  clearAllWork(tree, tree->root, clear_data);
 }
 
-void clearAllWork(struct Head* tree, struct Node* cur){
+void clearAllWork(struct Head* tree, struct Node* cur, unsigned char clear_data){
   if(cur != NULL){
-    clearAllWork(tree, cur->left);
-    clearAllWork(tree, cur->right);
-    freeNode(cur);
+    clearAllWork(tree, cur->left, clear_data);
+    clearAllWork(tree, cur->right, clear_data);
+    if(clear_data==DONT_CLEAR_DATA){
+    // only clear 
+      free(cur);     
+    }
+    else{
+      freeNode(cur);
+    }
     tree->size -= 1;
   }
 }
-
-
 
 struct Node* delete(struct Head* tree, unsigned int id){
     struct Node* search_Node;
@@ -232,7 +239,7 @@ struct Node* delete(struct Head* tree, unsigned int id){
     }
     search_Node = newNode(NULL, OBJ_PLAYER_ID);
     search_Node->node_id = id;
-    result = deleteNode(tree->root, search_Node);
+    result = deleteWork(tree->root, search_Node);
     if(result != NULL){
       tree->size -= 1;
     }
@@ -240,7 +247,7 @@ struct Node* delete(struct Head* tree, unsigned int id){
     return result;
 }
 
-struct Node *deleteNode(struct Node *cur_node, struct Node* del_node) {
+struct Node *deleteWork(struct Node *cur_node, struct Node* del_node) {
   int balance;
   if (cur_node == NULL)
     return cur_node;
@@ -248,10 +255,10 @@ struct Node *deleteNode(struct Node *cur_node, struct Node* del_node) {
     return del_node;
 
   if (del_node->node_id < cur_node->node_id){
-    cur_node->left = deleteNode(cur_node->left, del_node);
+    cur_node->left = deleteWork(cur_node->left, del_node);
   }
   else if (del_node->node_id > cur_node->node_id){
-    cur_node->right = deleteNode(cur_node->right, del_node);
+    cur_node->right = deleteWork(cur_node->right, del_node);
   }
   else {
     if ((cur_node->left == NULL) && (cur_node->right == NULL)) {
@@ -268,7 +275,7 @@ struct Node *deleteNode(struct Node *cur_node, struct Node* del_node) {
     else {
       struct Node *temp = minValueNode(cur_node->right);
       cur_node = temp;
-      cur_node->right = deleteNode(cur_node->right, del_node);
+      cur_node->right = deleteWork(cur_node->right, del_node);
     }
   }
 
@@ -298,4 +305,37 @@ struct Node *deleteNode(struct Node *cur_node, struct Node* del_node) {
   }
 
   return cur_node;
+}
+
+void pollObjects(struct Head* tree, struct Head* new, struct Head* old){
+  pollObjectsWork(tree->root, new, old);
+}
+
+void pollObjectsWork(struct Node* cur, struct Head* new, struct Head* old){
+  if(cur != NULL){
+    pollObjectsWork(cur->left, new, old);
+    pollObjectsWork(cur->right, new, old);
+    switch (cur->obj_id)
+    {
+      case OBJ_PLAYER_ID:
+        UpdatePlayer((struct Player *) cur->obj, new, old);
+        break;
+      case OBJ_BULLET_ID:
+        UpdateBullet((struct Bullet *) cur->obj, new, old);
+        break;
+      default:
+        break;
+    }
+  }
+}
+
+void TransferNodes(struct Head* dest, struct Head* src){
+  TransferNodesWork(dest, src->root);
+}
+void TransferNodesWork(struct Head* dest, struct Node* cur){
+  if(cur != NULL){
+    TransferNodesWork(dest, cur->left);
+    TransferNodesWork(dest, cur->right);
+    insertDirect(dest,cur);
+  }
 }
