@@ -37,7 +37,7 @@ void freePlayer(struct Player* plyr){
     free(plyr);
 }
 
-void UpdatePlayer(struct Player* plyr, struct Head* cur_nodes ,struct  Head* new_nodes, struct Head* expired_nodes){
+void UpdatePlayer( struct List* objList, struct Player* plyr){
     int player_inpts;
     char switch_flip=0;
     char index;
@@ -158,6 +158,7 @@ void UpdatePlayer(struct Player* plyr, struct Head* cur_nodes ,struct  Head* new
           plyr->obj->v_y.i = -1*acceleration_y.i;
     }
 
+/*
     if(player_inpts & INPUT_MASK_A) {
         if(plyr->bullet_timer == 0){
             plyr->bullet_timer = BULLET_COOLDOWN;
@@ -169,6 +170,7 @@ void UpdatePlayer(struct Player* plyr, struct Head* cur_nodes ,struct  Head* new
             insert(new_nodes, blt, OBJ_BULLET_ID);
         }
     }
+*/
 
    updateObject(plyr->obj);
 

@@ -9,15 +9,15 @@
 
 #define BULLET_COOLDOWN 30
 
-extern coordinate max_speed_squared;
-
 #include "input.h"
 
 #include "coordinate.h"
 #include "object.h"
-#include "Tree.h"
+#include "List.h"
 #include "globals.h"
 #include "Bullet.h"
+
+extern coordinate max_speed_squared;
 
 struct Player{
     struct Object* obj;
@@ -29,6 +29,6 @@ struct Player* initPlayer(char a_x,  char a_y, char a_bank, unsigned char a_play
 
 void freePlayer(struct Player* plyr);
 
-void UpdatePlayer(struct Player* plyr, struct Head* cur_nodes, struct  Head* new_nodes, struct Head* expired_nodes);
+void UpdatePlayer(struct List* objList, struct Player* plyr);
 
 #endif

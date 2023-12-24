@@ -3,7 +3,7 @@
 
 #include "coordinate.h"
 #include "object.h"
-#include "Tree.h"
+#include "List.h"
 
 #define ORIGIN_P1 0
 #define ORIGIN_P2 1
@@ -26,6 +26,6 @@ struct Bullet* initBullet(const coordinate* a_x,  const coordinate* a_y, const c
 
 void freeBullet(struct Bullet* blt);
 
-void UpdateBullet(struct Bullet* blt, struct Head* cur_nodes, struct  Head* new_nodes, struct Head* expired_nodes);
+void UpdateBullet(struct List* objList, struct Bullet* blt);
 
 #endif

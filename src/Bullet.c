@@ -26,7 +26,7 @@ void freeBullet(struct Bullet* blt){
     free(blt);
 }
 
-void UpdateBullet(struct Bullet* blt, struct Head* cur_nodes, struct  Head* new_nodes, struct Head* expired_nodes){
+void UpdateBullet(struct List* objList, struct Bullet* blt){
     blt->display_counter -= 1;
     if(blt->display_counter == 0){
         blt->display_counter = BULLET_FRAME_COUNTER;
@@ -39,6 +39,5 @@ void UpdateBullet(struct Bullet* blt, struct Head* cur_nodes, struct  Head* new_
             blt->obj->cur_frame = blt->obj->cur_frame+BULLET_FRAME_DELTA;
         }
     }
-
     updateObject(blt->obj);
 }
