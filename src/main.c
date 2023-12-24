@@ -8,6 +8,10 @@
 #include "List.h"
 #include <stdlib.h>
 
+unsigned int XXXXXXXXXXXXXXXXXXXXXXXXXXX;
+unsigned int YYYYYYYYYYYYYYYYYYYYYYYYYYY;
+void ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ(){};
+
 int main () {
     char col = 30, row = 20;
     char col_two = 60, row_two = 40;

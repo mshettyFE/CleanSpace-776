@@ -138,7 +138,6 @@ LNode* ListItemAction(struct List* list, LNode* item){
             UpdatePlayer(list, item->item);
             break;
         case OBJ_BULLET_ID:
-            UpdateBullet(list, item->item);
             break;
     }
 }
