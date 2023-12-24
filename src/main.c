@@ -6,6 +6,7 @@
 #include "player.h"
 #include "globals.h"
 #include "List.h"
+#include "SpatialHash.h"
 #include <stdlib.h>
 
 unsigned int AAAAAAAAAAAAAAAAAA = 50;
@@ -24,15 +25,17 @@ int main () {
 //    struct Node* temp;
 //    struct Node* temp2;
     struct Object* cur_obj;
-    struct List* objTree;
+    struct List* objList;
     struct List* DeathAnimations;
+    HashTable* SpatialAcceleration;
     
     max_speed_squared = gen_coord(1,0);
 
 //    init_all(objTree, nodes_to_add, nodes_to_remove, DeathAnimations);
 
-    objTree = initList();
+    objList = initList();
     DeathAnimations = initList();
+    SpatialAcceleration = initHash();
 
     flip_pages();
     clear_border(0);
@@ -47,8 +50,8 @@ int main () {
 //    players[PLYR_ONE_ID] =  initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID);
 //    players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID);
 
-    AddToHead(objTree,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-    AddToTail(objTree,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
+    AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+    AddToTail(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
 
     while (1) {//  Run forever
         clear_screen(0);
@@ -59,12 +62,13 @@ int main () {
 // update screen with objects (ignore what needs to be added/deleted for now)
 // For each new object to be created, add to the tree
 // For each new object to be deleted, remove from the tree
-        TraverseList(objTree);
+        TraverseList(objList);
 
         await_draw_queue();
         sleep(1);
         flip_pages();
         ++cur_frame;
+//        FillTable(SpatialAcceleration, objList);
 //        TransferNodes(objTree,nodes_to_add);
     }
 

@@ -3,7 +3,6 @@
 
 #include "drawing_funcs.h"
 #include "coordinate.h"
-#include "AABB.h"
 #include <stdlib.h>
 
 struct Object{
@@ -11,7 +10,6 @@ struct Object{
   coordinate y;
   coordinate v_x;
   coordinate v_y;
-  struct AABB* bounding_box;
   coordinate size;
   const char **sprite_table;
   char sprite_table_bank;
