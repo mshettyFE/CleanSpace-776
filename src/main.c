@@ -8,9 +8,11 @@
 #include "List.h"
 #include <stdlib.h>
 
-unsigned int XXXXXXXXXXXXXXXXXXXXXXXXXXX;
-unsigned int YYYYYYYYYYYYYYYYYYYYYYYYYYY;
-void ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ(){};
+unsigned int AAAAAAAAAAAAAAAAAA = 50;
+unsigned int OOOOOOOOOOOOOOOOOO = 30;
+unsigned int XXXXXXXXXXXXXXXXXX = 10;
+unsigned int YYYYYYYYYYYYYYYYYY = 20;
+void ZZZZZZZZZZZZZZZZZZZZZZZ(){};
 
 int main () {
     char col = 30, row = 20;

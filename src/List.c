@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+extern unsigned int OOOOOOOOOOOOOOOOOO;
+extern unsigned int XXXXXXXXXXXXXXXXXX;
+extern unsigned int YYYYYYYYYYYYYYYYYY;
+extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
+
 struct List* initList(){
     struct List* out = malloc(sizeof(struct List));
     out->head = NULL;
@@ -61,42 +66,51 @@ LNode* AddToTail(struct List* list, void* obj, unsigned char obj_type){
     return list->tail;
 }
 
-// assumes that node exists in list
+LNode* getNext(LNode* node){
+    if(node){
+        return node->next;
+    }
+    return NULL;
+}
+
+
+// assumes that node exists in list. Returns next pointer
 LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
-    LNode* temp;
     LNode* previous;
     LNode* next_one;
-    if(it == NULL){
-        return NULL;
-    }
-    if(list->head == it && list->tail==it){
-        freeItem(it);
-        list->head = NULL;
-        list->tail = NULL;
-        return NULL;
-    }
-    if(list->head == it){
+    if(it){
         list->size -= 1;
-        temp = list->head->next;
-        freeItem(it);
-        list->head = temp;
-        return temp;
+        if(list->head == it && list->tail==it){
+            freeItem(it);
+            list->head = NULL;
+            list->tail = NULL;
+            return NULL;
+        }
+        else if(list->head == it){
+            next_one = list->head->next;
+            freeItem(it);
+            list->head = next_one;
+            return next_one;
+        }
+        else if(list->tail == it){
+            previous = list->tail->prev;
+            previous->next = NULL;
+            freeItem(it);
+            it = NULL;
+            return NULL;
+        }
+        else{
+            previous = it->prev;
+            next_one = it->next;
+            freeItem(it);
+            it = NULL;
+            previous->next = next_one;
+            next_one->prev = previous;
+            return next_one;
+        }
     }
-    if(list->tail == it){
-        list->size -= 1;
-        temp = list->tail->prev;
-        freeItem(it);
-        list->tail = temp;
-        return NULL;
-    }
-        previous = it->prev;
-        next_one = it->next;
-        freeItem(it);
-        it = NULL;
-        previous->next = next_one;
-        next_one->prev = previous;
-        list->size -= 1;
-        return next_one;
+
+    return NULL;
 }
 
 void ClearList(struct List* list, void(*freeData)(LNode* cur)){
@@ -133,18 +147,16 @@ void TraverseList(struct List* list){
 }
 
 LNode* ListItemAction(struct List* list, LNode* item){
-    LNode* next;
     if(item){
-        next = item->next;
+        XXXXXXXXXXXXXXXXXX = item->next;
         switch(item->obj_type){
             case OBJ_PLAYER_ID:
-                UpdatePlayer(list, item);
+                return UpdatePlayer(list, item);
                 break;
             case OBJ_BULLET_ID:
-                UpdateBullet(list, item);
+                return UpdateBullet(list, item);
                 break;
         }
-        return  next;
     }
     return NULL;
 }

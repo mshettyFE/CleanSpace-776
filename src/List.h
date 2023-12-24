@@ -31,6 +31,7 @@ struct List{
 struct List* initList();
 
 
+LNode* getNext(LNode* node);
 
 LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type);
 LNode* AddToTail(struct List* list, void* obj, unsigned char obj_type);
