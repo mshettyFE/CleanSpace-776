@@ -3,6 +3,11 @@
 #include "Bullet.h"
 #include "player.h"
 
+unsigned int XXXXXXXXXXXXXXXXXXXXXXXXXXX;
+unsigned int YYYYYYYYYYYYYYYYYYYYYYYYYYY;
+void ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ(){};
+
+
 struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const coordinate*  a_v_x, const coordinate* a_v_y, char a_bank, char origin){
     struct Bullet* blt = malloc(sizeof(struct Bullet));
     blt->frame_toggle = 0;

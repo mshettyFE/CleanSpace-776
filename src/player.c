@@ -11,6 +11,7 @@
 #include "gen/assets/Small.h"
 #include "Bullet.h"
 
+
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, unsigned char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
     plyr->player_num = a_player_num;
@@ -158,19 +159,18 @@ void UpdatePlayer( struct List* objList, struct Player* plyr){
           plyr->obj->v_y.i = -1*acceleration_y.i;
     }
 
-/*
+
     if(player_inpts & INPUT_MASK_A) {
         if(plyr->bullet_timer == 0){
             plyr->bullet_timer = BULLET_COOLDOWN;
-            bullet_vel_x.i = acceleration_x.i<<1;
-            bullet_vel_y.i = acceleration_y.i<<1;
+            bullet_vel_x.i = acceleration_x.i<<2;
+            bullet_vel_y.i = acceleration_y.i<<2;
             bullet_pos_x = plyr->obj->x;
             bullet_pos_y = plyr->obj->y;
             blt = initBullet(&bullet_pos_x, &bullet_pos_y, &bullet_vel_x, &bullet_vel_y, BULLET_BANK,plyr->player_num);
-            insert(new_nodes, blt, OBJ_BULLET_ID);
+            AddToTail(objList, blt, OBJ_BULLET_ID);
         }
     }
-*/
 
    updateObject(plyr->obj);
 
