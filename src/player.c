@@ -170,7 +170,7 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
             plyr->obj->v_y.i = -1*acceleration_y.i;
         }
 
-    /*
+
         if(player_inpts & INPUT_MASK_A) {
             if(plyr->bullet_timer == 0){
                 plyr->bullet_timer = BULLET_COOLDOWN;
@@ -179,11 +179,10 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
                 bullet_pos_x = plyr->obj->x;
                 bullet_pos_y = plyr->obj->y;
                 blt = initBullet(&bullet_pos_x, &bullet_pos_y, &bullet_vel_x, &bullet_vel_y, BULLET_BANK,plyr->player_num);
-                insert(new_nodes, blt, OBJ_BULLET_ID);
+                AddToTail(objList,blt, OBJ_BULLET_ID);
             }
         }
 
-    */
         updateObject(plyr->obj);
         return node->next;
     }

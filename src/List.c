@@ -127,65 +127,27 @@ void freeListItem(LNode* cur){
 
 void TraverseList(struct List* list){
     LNode* cur = list->head;
-    while(cur != NULL){
+    while(cur){
         cur =ListItemAction(list, cur);
-//        cur = cur->next;
     }
 }
 
 LNode* ListItemAction(struct List* list, LNode* item){
     LNode* next;
-    if(item == NULL){
-        return NULL;
+    if(item){
+        next = item->next;
+        switch(item->obj_type){
+            case OBJ_PLAYER_ID:
+                UpdatePlayer(list, item);
+                break;
+            case OBJ_BULLET_ID:
+                UpdateBullet(list, item);
+                break;
+        }
+        return  next;
     }
-    next = item->next;
-    switch(item->obj_type){
-        case OBJ_PLAYER_ID:
-            UpdatePlayer(list, item);
-            break;
-        case OBJ_BULLET_ID:
-            break;
-    }
-    return  next;
+    return NULL;
 }
-
-/*
-void TraverseList(struct List* list){
-    LNode* cur = list->head;
-    while(cur){
-        ListItemAction(list, cur);
-        cur = cur->next;
-    }
-}
-LNode* ListItemAction(struct List* list, LNode* item){
-    switch(item->obj_type){
-        case OBJ_PLAYER_ID:
-            UpdatePlayer(list, item->item);
-            break;
-        case OBJ_BULLET_ID:
-            break;
-    }
-}
-*/
-
-/*
-void PrintList(struct List* list, void(*print)(void* data, unsigned char type)){
-    if(list==NULL){
-        printf("\n");
-        return;
-    }
-    if(list->head == NULL){
-        printf("\n");
-        return;
-    }
-    LNode* it = list->head;
-    while(it != NULL){
-        print(it->item, it->obj_type);
-        it = it->next;
-    }
-    printf("\n");
-}
-*/
 
 /*
 void printItem(LNode* cur){

@@ -27,12 +27,6 @@ struct Player{
 
 struct Player* initPlayer(char a_x,  char a_y, char a_bank, unsigned char a_player_num);
 
-/*
-void freePlayer(struct Player* plyr);
-
-void UpdatePlayer(struct List* objList, struct Player* plyr);
-*/
-
 void freePlayer(LNode* node);
 
 LNode* UpdatePlayer(struct List* objList, LNode* node);
