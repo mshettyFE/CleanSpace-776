@@ -124,6 +124,32 @@ void freeListItem(LNode* cur){
     free(cur);
 }
 
+
+void TraverseList(struct List* list){
+    LNode* cur = list->head;
+    while(cur != NULL){
+        cur =ListItemAction(list, cur);
+//        cur = cur->next;
+    }
+}
+
+LNode* ListItemAction(struct List* list, LNode* item){
+    LNode* next;
+    if(item == NULL){
+        return NULL;
+    }
+    next = item->next;
+    switch(item->obj_type){
+        case OBJ_PLAYER_ID:
+            UpdatePlayer(list, item);
+            break;
+        case OBJ_BULLET_ID:
+            break;
+    }
+    return  next;
+}
+
+/*
 void TraverseList(struct List* list){
     LNode* cur = list->head;
     while(cur){
@@ -131,7 +157,6 @@ void TraverseList(struct List* list){
         cur = cur->next;
     }
 }
-
 LNode* ListItemAction(struct List* list, LNode* item){
     switch(item->obj_type){
         case OBJ_PLAYER_ID:
@@ -141,7 +166,7 @@ LNode* ListItemAction(struct List* list, LNode* item){
             break;
     }
 }
-
+*/
 
 /*
 void PrintList(struct List* list, void(*print)(void* data, unsigned char type)){
