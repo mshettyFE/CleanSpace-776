@@ -6,10 +6,16 @@
 #include <stdio.h>
 #include "object.h"
 #include "Death.h"
+extern unsigned int AAAAAAAAAAAAAAAAAA;
+extern unsigned int BBBBBBBBBBBBBBBBBB;
+extern unsigned int CCCCCCCCCCCCCCCCCC;
+extern unsigned int DDDDDDDDDDDDDDDDDD;
 extern unsigned int OOOOOOOOOOOOOOOOOO;
 extern unsigned int XXXXXXXXXXXXXXXXXX;
 extern unsigned int YYYYYYYYYYYYYYYYYY;
 extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
+
+#define USE_COL
 
 struct List* initList(){
     struct List* out = malloc(sizeof(struct List));
@@ -106,7 +112,7 @@ LNode* getNext(LNode* node){
 
 
 // assumes that node exists in list. Returns next pointer
-LNode* Remove(struct List* list, LNode* it, struct List* death, void(*freeItem)(LNode* cur) ){
+LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
     LNode* previous;
     LNode* next_one;
     if(it){
@@ -171,7 +177,7 @@ LNode* RemoveDeath(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
     return NULL;
 }
 
-void ClearList(struct List* list, struct List* Death, void(*freeData)(LNode* cur)){
+void ClearList(struct List* list, void(*freeData)(LNode* cur)){
     LNode* tmp;
     LNode* cur;
     if(list==NULL){
@@ -179,7 +185,7 @@ void ClearList(struct List* list, struct List* Death, void(*freeData)(LNode* cur
     }
     cur = list->head;
     while(cur){
-        cur = Remove(list,cur,Death, freeData);
+        cur = Remove(list,cur, freeData);
     }
 }
 
@@ -217,16 +223,26 @@ void TraverseDeathList(struct List* list){
 
 
 LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
+    LNode* original;
+    LNode* postCollisions;
     if(item){
+#ifdef USE_COL
+        original = item;
+        postCollisions =  DealWithCollisions(list, item, Death, UPDATE_DEATH);
+        CCCCCCCCCCCCCCCCCC = postCollisions;
+        if(postCollisions != original){
+            return postCollisions;
+        }
+#endif
         switch(item->obj_type){
             case OBJ_PLAYER_ID:
-                return UpdatePlayer(list, item, Death);
+                return UpdatePlayer(list, item);
                 break;
             case OBJ_BULLET_ID:
-                return UpdateBullet(list, item, Death);
+                return UpdateBullet(list, item);
                 break;
             case OBJ_METEOR_ID:
-                return UpdateMeteor(list, item, Death);
+                return UpdateMeteor(list, item);
                 break;
         }
     }
@@ -252,4 +268,85 @@ struct Object* extractObj(LNode* item){
             break;    
     }
     return out;
+}
+
+unsigned char cmp(LNode* node1, LNode* node2){
+    struct Object* ob1;
+    struct Object* ob2;
+    char dx,dy, size;
+    if(node1 == node2){
+        return 0;
+    }
+    ob1 = extractObj(node1);
+    ob2 = extractObj(node2);
+    if(!ob1 || !ob2){
+        return 0;
+    }
+    dx = ob1->x.b.msb - ob2->x.b.msb;
+    dy = ob1->y.b.msb - ob2->y.b.msb;
+    size  = ob1->size.b.msb+ ob2->size.b.msb;
+    if(dx & 128) dx = -dx;
+    if(dy & 128) dy = -dy;
+    return (dx < size) && (dy < size);
+}
+
+// returns current node if no collisions detected. Returns next node if collisions were detected
+// populates Death with dying animations
+LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, unsigned char update_death ){
+    LNode * og;
+    LNode* itr;
+    LNode* output;
+    unsigned char collision_maybe;
+    output = cur;
+    YYYYYYYYYYYYYYYYYY = output;
+    og = cur;
+    itr = cur->next;
+    while(itr){
+// collision found. 
+        collision_maybe = cmp(og,itr);
+        AAAAAAAAAAAAAAAAAA = collision_maybe;
+        if(collision_maybe){
+// check if both are bullets. If so, then continue iterating through list
+            if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_BULLET_ID)){
+                itr = itr->next;
+                continue;
+            }
+//check if one if PLAYER and the other is BULLET. If Bullet came from that Player, continue on. Do for both ways
+            if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_PLAYER_ID)){
+                if(  ((struct Bullet*)og->item)->origin == ((struct Player*)itr->item)->player_num ){
+                    itr = itr->next;
+                    continue;
+                }
+            }
+            if((og->obj_type==OBJ_PLAYER_ID) && (itr->obj_type==OBJ_BULLET_ID)){
+                if(  ((struct Player*)og->item)->player_num == ((struct Bullet*)itr->item)->origin ){
+                    itr = itr->next;
+                    continue;
+                }
+            }
+            if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_BULLET_ID)){}
+
+// if update_death, then add objects to Death queue. Don't add bullets to Death
+            if(update_death){
+                if(og->obj_type!=OBJ_BULLET_ID){
+                    AddNodeToHead(Death, initDeathAnim(og));
+                }                
+                if(itr->obj_type!=OBJ_BULLET_ID){
+                    AddNodeToHead(Death, initDeathAnim(itr));
+                }
+            }
+// Regardless of update_death, remove both og and the current iterator from the queue. Return value of itr (this is next valid node)
+                Remove(list,og,freeListItem);
+                output = Remove(list,itr,freeListItem);
+                output;
+            return output;
+        }
+        else{
+// No collision found (yet). simply increment itr to next;
+            itr = itr->next;
+        }
+
+    }
+// No collisions detected. Return og to indicate nothing changed
+    return output;
 }

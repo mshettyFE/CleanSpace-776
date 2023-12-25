@@ -19,6 +19,7 @@ struct Bullet{
     unsigned char frame_toggle;
     unsigned char display_counter;
     unsigned char lifetime;
+    unsigned char origin;
 };
 
 struct Bullet* initBullet(const coordinate* a_x,  const coordinate* a_y, const coordinate*  a_v_x, const  coordinate* a_v_y, char a_bank, char origin);

@@ -7,6 +7,11 @@
 #define SMALL_METEOR_BANK 4
 #define DEATH_BANK 5
 
+#define BULLET_SIZE 3
+#define PLAYER_SIZE 4
+#define SMALL_METEOR_SIZE 4
+#define BIG_METEOR_SIZE 8
+
 extern unsigned int counter;
 
 #endif

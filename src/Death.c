@@ -36,13 +36,15 @@ LNode* initDeathAnim(LNode* node){
                 anim->starting_frame = PLAYER_TWO_DEATH_START;
                 break;
             }
-                anim->obj = initObject(pid->obj->x.b.msb, pid->obj->y.b.msb, 0, 0,8,&ASSET__Death__Death_json, DEATH_BANK, anim->starting_frame, SPRITE_FLIP_NONE);
+                anim->obj = initObject(pid->obj->x.b.msb, pid->obj->y.b.msb, 0, 0,4,&ASSET__Death__Death_json, DEATH_BANK, anim->starting_frame, SPRITE_FLIP_NONE);
             break;
         case OBJ_BULLET_ID:
             free(anim);
             return NULL;
             break;
         case OBJ_METEOR_ID:
+            free(anim);
+            return NULL;
             break;        
         }
     anim->counter = 0;

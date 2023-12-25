@@ -6,8 +6,8 @@
 #define OBJ_BULLET_ID 2
 #define OBJ_METEOR_ID 3
 
-#define DONT_CLEAR_DATA 0
-#define CLEAR_DATA 1
+#define DONT_UPDATE_DEATH 0
+#define UPDATE_DEATH 1
 
 #include "object.h"
 
@@ -39,9 +39,9 @@ LNode* AddNodeToTail(struct List* list, LNode* opt);
 LNode* AddNodeToHead(struct List* list, LNode* opt);
 
 
-void ClearList(struct List* list, struct List* Death, void(*freeData)(LNode* cur));
+void ClearList(struct List* list, void(*freeData)(LNode* cur));
 
-LNode* Remove(struct List* list, LNode* it, struct List* death, void(*freeItem)(LNode* cur) );
+LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) );
 
 LNode* RemoveDeath(struct List* list, LNode* it, void(*freeItem)(LNode* cur) );
 
@@ -57,6 +57,8 @@ struct Object* extractObj(LNode* item);
 
 unsigned char cmp(LNode* node1, LNode* node2);
 
-void DealWithCollisions(struct List* list, LNode* cur, struct List* Death);
+// returns current node if no collisions detected. Returns next node if collisions were detected
+// populates Death with dying animations
+LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, unsigned char update_death );
 
 #endif

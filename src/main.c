@@ -15,10 +15,13 @@
 #include "List.h"
 #include <stdlib.h>
 
-unsigned int AAAAAAAAAAAAAAAAAA = 50;
-unsigned int OOOOOOOOOOOOOOOOOO = 30;
-unsigned int XXXXXXXXXXXXXXXXXX = 10;
-unsigned int YYYYYYYYYYYYYYYYYY = 20;
+unsigned int AAAAAAAAAAAAAAAAAA = 2000;
+unsigned int BBBBBBBBBBBBBBBBBB = 2000;
+unsigned int CCCCCCCCCCCCCCCCCC = 2000;
+unsigned int DDDDDDDDDDDDDDDDDD = 1000;
+unsigned int OOOOOOOOOOOOOOOOOO = 2000;
+unsigned int XXXXXXXXXXXXXXXXXX = 2000;
+unsigned int YYYYYYYYYYYYYYYYYY = 2000;
 void ZZZZZZZZZZZZZZZZZZZZZZZ(){};
 
 int main () {
@@ -65,10 +68,11 @@ int main () {
 */
 
 
-    for(i=0; i< 5; ++i){
+    for(i=0; i< 1; ++i){
         AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
         AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , BIG_METEOR), OBJ_METEOR_ID);
     }
+
 
 
 
@@ -88,9 +92,6 @@ int main () {
         sleep(1);
         flip_pages();
         ++cur_frame;
-//        FillTable(SpatialAcc, objList);
-//        ClearTable(SpatialAcc);
-//        TransferNodes(objTree,nodes_to_add);
     }
 
   return (0);                                     //  We should never get here!
