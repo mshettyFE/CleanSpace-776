@@ -11,6 +11,7 @@
 #define PLAYER_SIZE 4
 #define SMALL_METEOR_SIZE 4
 #define BIG_METEOR_SIZE 8
+#define DEATH_ANIM_SIZE 4
 
 extern unsigned int counter;
 
