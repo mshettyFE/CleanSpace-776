@@ -34,7 +34,8 @@ struct Object* initObjectInt( const signed int  a_x, const  signed int  a_y, con
     output->v_y.i = a_v_y;
     output->sprite_table = a_sprite_table;
     output->sprite_table_bank = a_sprite_table_bank;
-    output->size.i = a_size;
+    output->size.b.msb = a_size;
+    output->size.b.lsb = 0;
     output->bank = a_bank;
     output->cur_frame = a_cur_frame;
     output->cur_flip = a_cur_flip;
