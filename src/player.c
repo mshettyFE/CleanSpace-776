@@ -47,7 +47,7 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
     int player_inpts;
     int old_player_inpts;
     char switch_flip=0;
-    char index;
+    unsigned char index;
     struct Bullet* blt;
     struct Player* plyr;
     coordinate acceleration_x;
@@ -84,33 +84,33 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
             switch (plyr->obj->cur_flip)
             {
                 case SPRITE_FLIP_NONE:
-                    index += 1;
                     if(index==7){
                         plyr->obj->cur_flip = SPRITE_FLIP_Y;
                         break;
                     }
+                    index += 1;
                     break;
 
                 case SPRITE_FLIP_Y:
-                    index -= 1;
                     if(index==0){
                         plyr->obj->cur_flip = SPRITE_FLIP_BOTH;
                         break;
                     }
+                    index -= 1;
                     break;
                 case SPRITE_FLIP_BOTH:
-                    index += 1;
                     if(index==7){
                         plyr->obj->cur_flip = SPRITE_FLIP_X;
                         break;
                     }
+                    index += 1;
                     break;        
                 case SPRITE_FLIP_X:
-                    index -= 1;
                     if(index==0){
                         plyr->obj->cur_flip = SPRITE_FLIP_NONE;
                         break;
                     }
+                    index -= 1;
                     break;
             }
         }
