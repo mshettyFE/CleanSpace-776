@@ -24,13 +24,9 @@ LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type){
     opt->item = obj;
     list->size += 1;
     opt->prev = NULL;
-    if(list->tail ==NULL && list->head == NULL){
-        list->head = opt;
-        list->tail = opt;
-        opt->next = NULL;
-    }
     if(list->head == NULL){
         list->head = opt;
+        list->tail = opt;
         opt->next = NULL;
         return opt;
     }
@@ -48,14 +44,9 @@ LNode* AddToTail(struct List* list, void* obj, unsigned char obj_type){
     opt->item = obj;
     list->size += 1;
     opt->next = NULL;
-    if(list->tail ==NULL && list->head == NULL){
+    if(list->tail == NULL){
+        list->tail = opt;
         list->head = opt;
-        list->tail = opt;
-        opt->prev = NULL;
-        return opt;
-    }
-    else if(list->tail == NULL){
-        list->tail = opt;
         opt->prev = NULL;
         return opt;
     }
