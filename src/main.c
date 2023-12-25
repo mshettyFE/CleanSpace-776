@@ -2,8 +2,10 @@
 #include "drawing_funcs.h"
 #include "gen/assets/Small.h"
 #include "gen/assets/Bullets.h"
+#include "gen/assets/Death.h"
 #include "object.h"
 #include "player.h"
+#include "Death.h"
 #include "globals.h"
 #include "List.h"
 #include <stdlib.h>
@@ -43,6 +45,7 @@ int main () {
     await_draw_queue();
     clear_border(0);
 
+    load_spritesheet(&ASSET__Death__Death_bmp,DEATH_BANK);
     load_spritesheet(&ASSET__Small__Small_bmp, SMALL_BANK);
     load_spritesheet(&ASSET__Bullets__Bullets_bmp, BULLET_BANK);
 
@@ -51,7 +54,11 @@ int main () {
 
     AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
     AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-//    AddToTail(objList,initPlayer(  90,  90, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+    t = AddToTail(objList,initPlayer(  90,  90, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+    AAAAAAAAAAAAAAAAAA = ((struct Player*) t->item)->obj->x.i;
+    OOOOOOOOOOOOOOOOOO = ((struct Player*) t->item)->obj->y.i;
+
+    AddNodeToHead(DeathAnimations,initDeathAnim(t));
 
     while (1) {//  Run forever
         clear_screen(0);
@@ -63,6 +70,7 @@ int main () {
 // For each new object to be created, add to the tree
 // For each new object to be deleted, remove from the tree
         TraverseList(objList, DeathAnimations);
+        TraverseDeathList(DeathAnimations);
 
         await_draw_queue();
         sleep(1);
