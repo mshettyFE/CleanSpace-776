@@ -25,9 +25,10 @@ int main () {
 //    struct Node* temp;
 //    struct Node* temp2;
     struct Object* cur_obj;
+    LNode* t;
     struct List* objList;
     struct List* DeathAnimations;
-    HashTable* SpatialAcceleration;
+    struct HashTable* SpatialAcc;
     
     max_speed_squared = gen_coord(1,0);
 
@@ -35,7 +36,7 @@ int main () {
 
     objList = initList();
     DeathAnimations = initList();
-    SpatialAcceleration = initHash();
+    SpatialAcc = initHash();
 
     flip_pages();
     clear_border(0);
@@ -50,8 +51,9 @@ int main () {
 //    players[PLYR_ONE_ID] =  initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID);
 //    players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID);
 
+    AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
     AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-    AddToTail(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
+//    AddToTail(objList,initPlayer(  90,  90, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
 
     while (1) {//  Run forever
         clear_screen(0);
@@ -68,7 +70,8 @@ int main () {
         sleep(1);
         flip_pages();
         ++cur_frame;
-//        FillTable(SpatialAcceleration, objList);
+//        FillTable(SpatialAcc, objList);
+//        ClearTable(SpatialAcc);
 //        TransferNodes(objTree,nodes_to_add);
     }
 

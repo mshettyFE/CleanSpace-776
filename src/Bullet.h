@@ -12,7 +12,7 @@
 
 #define BULLET_FRAME_COUNTER 30
 #define BULLET_FRAME_DELTA 4
-#define BULLET_LIFETIME 120
+#define BULLET_LIFETIME 255
 
 struct Bullet{
     struct Object* obj;

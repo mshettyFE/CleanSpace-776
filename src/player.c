@@ -45,6 +45,7 @@ void freePlayer(LNode* node){
 
 LNode* UpdatePlayer(struct List* objList, LNode* node){
     int player_inpts;
+    int old_player_inpts;
     char switch_flip=0;
     char index;
     struct Bullet* blt;
@@ -69,12 +70,14 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
         switch (plyr->player_num){
         case PLYR_ONE_ID:
             player_inpts = player1_buttons;
+            old_player_inpts = player1_old_buttons;
             index = plyr->obj->cur_frame - PLAYER_ONE_STRT_FRAME;
             break;
         case PLYR_TWO_ID:
             player_inpts = player2_buttons;
+            old_player_inpts = player2_old_buttons;
             index = plyr->obj->cur_frame - PLAYER_TWO_STRT_FRAME;
-            break;    
+            break;
         }
         
         if(player_inpts & INPUT_MASK_RIGHT){

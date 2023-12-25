@@ -7,7 +7,7 @@
 #define PLAYER_ONE_STRT_FRAME 0
 #define PLAYER_TWO_STRT_FRAME 8
 
-#define BULLET_COOLDOWN 10
+#define BULLET_COOLDOWN 1
 
 #include "input.h"
 
@@ -30,6 +30,5 @@ struct Player* initPlayer(char a_x,  char a_y, char a_bank, unsigned char a_play
 void freePlayer(LNode* node);
 
 LNode* UpdatePlayer(struct List* objList, LNode* node);
-
 
 #endif

@@ -71,13 +71,7 @@ LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
     LNode* next_one;
     if(it){
         list->size -= 1;
-        if(list->head == it && list->tail==it){
-            freeItem(it);
-            list->head = NULL;
-            list->tail = NULL;
-            return NULL;
-        }
-        else if(list->head == it){
+        if(list->head == it){
             next_one = list->head->next;
             freeItem(it);
             list->head = next_one;
@@ -139,7 +133,6 @@ void TraverseList(struct List* list){
 
 LNode* ListItemAction(struct List* list, LNode* item){
     if(item){
-        XXXXXXXXXXXXXXXXXX = item->next;
         switch(item->obj_type){
             case OBJ_PLAYER_ID:
                 return UpdatePlayer(list, item);
