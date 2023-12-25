@@ -1,6 +1,7 @@
 #include "List.h"
 #include "player.h"
 #include "Bullet.h"
+#include "Meteor.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "Death.h"
@@ -190,6 +191,8 @@ void freeListItem(LNode* cur){
     case OBJ_BULLET_ID:
         freeBullet(cur->item);
         break;
+    case OBJ_METEOR_ID:
+        freeMeteor(cur->item);
     }
     free(cur);
 }
@@ -220,6 +223,9 @@ LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
                 break;
             case OBJ_BULLET_ID:
                 return UpdateBullet(list, item, Death);
+                break;
+            case OBJ_METEOR_ID:
+                return UpdateMeteor(list, item, Death);
                 break;
         }
     }

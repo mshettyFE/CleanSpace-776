@@ -1,6 +1,14 @@
 #ifndef COORDINATE
 #define COORDINATE
 
+#include "random.h"
+
+#define gen_rand_x_vel gen_x_accel(rnd_range(0,7), rnd_range(0,4)).i>>2
+#define gen_rand_y_vel gen_y_accel(rnd_range(0,7), rnd_range(0,4)).i>>2
+#define gen_rand_x gen_coord(rnd_range(0,127),0)
+#define gen_rand_y gen_coord(rnd_range(0,127),0)
+
+
 typedef struct {
     unsigned char lsb;
     signed char msb;

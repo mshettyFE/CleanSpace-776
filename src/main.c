@@ -1,11 +1,16 @@
+#include "random.h"
 #include "gametank.h"
 #include "drawing_funcs.h"
 #include "gen/assets/Small.h"
 #include "gen/assets/Bullets.h"
 #include "gen/assets/Death.h"
+#include "gen/assets/Meteor.h"
+#include "gen/assets/SmallMeteor.h"
 #include "object.h"
 #include "player.h"
 #include "Death.h"
+#include "Meteor.h"
+#include "coordinate.h"
 #include "globals.h"
 #include "List.h"
 #include <stdlib.h>
@@ -22,14 +27,9 @@ int main () {
     char dx = 1, dy = 1;
     char cur_frame = 0;
     coordinate max_speed_squared;
-//    struct Player* players[3];
-//    struct Node* temp;
-//    struct Node* temp2;
-    struct Object* cur_obj;
     LNode* t;
     struct List* objList;
     struct List* DeathAnimations;
-    struct HashTable* SpatialAcc;
     
     max_speed_squared = gen_coord(1,0);
 
@@ -48,17 +48,24 @@ int main () {
     load_spritesheet(&ASSET__Death__Death_bmp,DEATH_BANK);
     load_spritesheet(&ASSET__Small__Small_bmp, SMALL_BANK);
     load_spritesheet(&ASSET__Bullets__Bullets_bmp, BULLET_BANK);
+    load_spritesheet(&ASSET__Meteor__Meteor_bmp, METEOR_BANK);
+    load_spritesheet(&ASSET__SmallMeteor__SmallMeteor_bmp, SMALL_METEOR_BANK);
 
 //    players[PLYR_ONE_ID] =  initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID);
 //    players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID);
 
+/*
     AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
     AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
     t = AddToTail(objList,initPlayer(  90,  90, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-    AAAAAAAAAAAAAAAAAA = ((struct Player*) t->item)->obj->x.i;
-    OOOOOOOOOOOOOOOOOO = ((struct Player*) t->item)->obj->y.i;
+//    AddNodeToHead(DeathAnimations,initDeathAnim(t));
 
-    AddNodeToHead(DeathAnimations,initDeathAnim(t));
+*/
+
+/*
+
+*/
+
 
     while (1) {//  Run forever
         clear_screen(0);

@@ -36,9 +36,6 @@ LNode* initDeathAnim(LNode* node){
                 anim->starting_frame = PLAYER_TWO_DEATH_START;
                 break;
             }
-                XXXXXXXXXXXXXXXXXX = (int) pid->obj->x.i;
-                YYYYYYYYYYYYYYYYYY = (int) pid->obj->y.i;
-                ZZZZZZZZZZZZZZZZZZZZZZZ();
                 anim->obj = initObject(pid->obj->x.b.msb, pid->obj->y.b.msb, 0, 0,8,&ASSET__Death__Death_json, DEATH_BANK, anim->starting_frame, SPRITE_FLIP_NONE);
             break;
         case OBJ_BULLET_ID:
