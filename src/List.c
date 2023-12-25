@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "Meteor.h"
 #include <stdlib.h>
+#include "gametank.h"
 #include <stdio.h>
 #include "object.h"
 #include "Death.h"
@@ -14,6 +15,8 @@ extern unsigned int OOOOOOOOOOOOOOOOOO;
 extern unsigned int XXXXXXXXXXXXXXXXXX;
 extern unsigned int YYYYYYYYYYYYYYYYYY;
 extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
+
+extern unsigned char meteor_present;
 
 #define USE_COL
 
@@ -110,6 +113,10 @@ LNode* getNext(LNode* node){
     return NULL;
 }
 
+LNode* RemoveDeath(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
+    return Remove(list, it, &freeItem);
+}
+
 
 // assumes that node exists in list. Returns next pointer
 LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
@@ -145,38 +152,6 @@ LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
 }
 
 
-LNode* RemoveDeath(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
-    LNode* previous;
-    LNode* next_one;
-    if(it){
-        list->size -= 1;
-        if(list->head == it){
-            next_one = list->head->next;
-            freeItem(it);
-            list->head = next_one;
-            return next_one;
-        }
-        else if(list->tail == it){
-            previous = list->tail->prev;
-            previous->next = NULL;
-            freeItem(it);
-            it = NULL;
-            return NULL;
-        }
-        else{
-            previous = it->prev;
-            next_one = it->next;
-            freeItem(it);
-            it = NULL;
-            previous->next = next_one;
-            next_one->prev = previous;
-            return next_one;
-        }
-    }
-
-    return NULL;
-}
-
 void ClearList(struct List* list, void(*freeData)(LNode* cur)){
     LNode* tmp;
     LNode* cur;
@@ -192,6 +167,9 @@ void ClearList(struct List* list, void(*freeData)(LNode* cur)){
 void freeListItem(LNode* cur){
     switch (cur->obj_type)
     {
+    case OBJ_DEATH_ID:
+        freeDeath(cur->item);
+        break;
     case OBJ_PLAYER_ID:
         freePlayer(cur->item);
         break;
@@ -229,7 +207,6 @@ LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
 #ifdef USE_COL
         original = item;
         postCollisions =  DealWithCollisions(list, item, Death, UPDATE_DEATH);
-        CCCCCCCCCCCCCCCCCC = postCollisions;
         if(postCollisions != original){
             return postCollisions;
         }
@@ -242,6 +219,7 @@ LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
                 return UpdateBullet(list, item);
                 break;
             case OBJ_METEOR_ID:
+                meteor_present = 1;
                 return UpdateMeteor(list, item);
                 break;
         }
@@ -273,7 +251,7 @@ struct Object* extractObj(LNode* item){
 unsigned char cmp(LNode* node1, LNode* node2){
     struct Object* ob1;
     struct Object* ob2;
-    char dx,dy, size;
+    unsigned int dx,dy, size;
     if(node1 == node2){
         return 0;
     }
@@ -297,17 +275,23 @@ LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, uns
     LNode* itr;
     LNode* output;
     unsigned char collision_maybe;
+    unsigned int x;
     output = cur;
-    YYYYYYYYYYYYYYYYYY = output;
     og = cur;
     itr = cur->next;
     while(itr){
 // collision found. 
+        PROFILER_START(x)
         collision_maybe = cmp(og,itr);
-        AAAAAAAAAAAAAAAAAA = collision_maybe;
+        PROFILER_END(x)
         if(collision_maybe){
 // check if both are bullets. If so, then continue iterating through list
             if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_BULLET_ID)){
+                itr = itr->next;
+                continue;
+            }
+// check if both are meteors. If so, then continue iterating through list
+            if((og->obj_type==OBJ_METEOR_ID) && (itr->obj_type==OBJ_METEOR_ID)){
                 itr = itr->next;
                 continue;
             }

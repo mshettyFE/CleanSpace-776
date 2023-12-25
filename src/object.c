@@ -1,5 +1,8 @@
 #include "object.h"
+#include "gametank.h"
 #include <stdlib.h>
+
+extern unsigned int XXXXXXXXXXXXXXXXXX;
 
 struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  const char a_v_y, const  unsigned char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank, const char a_cur_frame, const char a_cur_flip){
