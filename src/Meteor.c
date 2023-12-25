@@ -16,6 +16,7 @@ extern const unsigned char p_sine_lsb[8];
 
 struct Meteor* initMeteor(const coordinate a_x,const  coordinate  a_y, char a_meteor_type){
     struct Meteor* mtr = malloc(sizeof(struct Meteor));
+    if(!mtr){return NULL;}
     mtr->meteor_type = a_meteor_type;
     switch (mtr->meteor_type)
     {
@@ -27,6 +28,11 @@ struct Meteor* initMeteor(const coordinate a_x,const  coordinate  a_y, char a_me
         mtr->obj = initObjectInt( a_x.i, a_y.i, gen_rand_x_vel, gen_rand_y_vel ,
              SMALL_METEOR_SIZE, &ASSET__SmallMeteor__SmallMeteor_json, SMALL_METEOR_BANK, gen_small_meteor_frame , SPRITE_FLIP_NONE);
         break;
+    }
+    if(mtr->obj == NULL){
+        free(mtr->obj);
+        free(mtr);
+        return NULL;
     }
     return mtr;
 }

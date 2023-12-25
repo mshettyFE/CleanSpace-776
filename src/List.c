@@ -14,6 +14,7 @@ extern unsigned char meteor_present;
 
 struct List* initList(){
     struct List* out = malloc(sizeof(struct List));
+    if(!out){return NULL;}
     out->head = NULL;
     out->tail = NULL;
     out->size = 0;
@@ -23,6 +24,7 @@ struct List* initList(){
 LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type){
     LNode* temp;
     LNode* opt = malloc(sizeof(LNode));
+    if(!opt){return NULL;}
     opt->obj_type = obj_type;
     opt->item = obj;
     list->size += 1;

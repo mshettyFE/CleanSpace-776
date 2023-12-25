@@ -17,6 +17,7 @@ extern unsigned char player_2_present;
 
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, unsigned char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
+    if(!plyr){return NULL;}
     plyr->player_num = a_player_num;
     plyr->bullet_timer = BULLET_COOLDOWN;
     switch (plyr->player_num)
@@ -29,6 +30,10 @@ struct Player* initPlayer(  char a_x,  char a_y, char a_bank, unsigned char a_pl
         break;    
     default:
         break;
+    }
+    if(plyr->obj == NULL){
+        free(plyr->obj);
+        free(plyr);
     }
     return plyr;
 }
@@ -196,6 +201,10 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
                 bullet_pos_x = plyr->obj->x;
                 bullet_pos_y = plyr->obj->y;
                 blt = initBullet(&bullet_pos_x, &bullet_pos_y, &bullet_vel_x, &bullet_vel_y, BULLET_BANK,plyr->player_num);
+                if(blt == NULL){
+                    updateObject(plyr->obj);
+                    return node->next;
+                }
                 AddToHead(objList,blt, OBJ_BULLET_ID);
             }
         }

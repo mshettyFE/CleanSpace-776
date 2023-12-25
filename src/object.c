@@ -7,6 +7,7 @@ extern unsigned int XXXXXXXXXXXXXXXXXX;
 struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  const char a_v_y, const  unsigned char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank, const char a_cur_frame, const char a_cur_flip){
     struct Object *output = malloc(sizeof(struct Object));
+    if(!output){return NULL;}
     output->x.b.msb = a_x;
     output->x.b.lsb = 0;
     output->y.b.msb = a_y;
@@ -28,6 +29,7 @@ struct Object* initObject( const char a_x, const  char a_y, const  char a_v_x,  
 struct Object* initObjectInt( const signed int  a_x, const  signed int  a_y, const  signed int  a_v_x,  const signed int  a_v_y, const unsigned  char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank, const char a_cur_frame, const char a_cur_flip){
     struct Object *output = malloc(sizeof(struct Object));
+    if(!output){return NULL;}
     output->x.i = a_x;
     output->y.i = a_y;
     output->v_x.i = a_v_x;
@@ -45,6 +47,7 @@ struct Object* initObjectInt( const signed int  a_x, const  signed int  a_y, con
 struct Object* initObjectCoord( const coordinate*  a_x, const  coordinate* a_y, const  coordinate*  a_v_x,  const coordinate*  a_v_y, const unsigned  char a_size,
   const char **a_sprite_table, const char a_sprite_table_bank, const char a_bank, const char a_cur_frame, const char a_cur_flip){
     struct Object *output = malloc(sizeof(struct Object));
+    if(!output){return NULL;}
     output->x = *a_x;
     output->y = *a_y;
     output->v_x = *a_v_x;
