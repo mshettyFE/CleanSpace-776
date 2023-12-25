@@ -15,15 +15,6 @@
 #include "List.h"
 #include <stdlib.h>
 
-unsigned int AAAAAAAAAAAAAAAAAA = 2000;
-unsigned int BBBBBBBBBBBBBBBBBB = 2000;
-unsigned int CCCCCCCCCCCCCCCCCC = 2000;
-unsigned int DDDDDDDDDDDDDDDDDD = 1000;
-unsigned int OOOOOOOOOOOOOOOOOO = 2000;
-unsigned int XXXXXXXXXXXXXXXXXX = 2000;
-unsigned int YYYYYYYYYYYYYYYYYY = 2000;
-void ZZZZZZZZZZZZZZZZZZZZZZZ(){};
-
 unsigned char player_1_present = 0;
 unsigned char player_2_present = 0;
 unsigned char meteor_present = 0;
@@ -82,16 +73,17 @@ int main () {
         flip_pages();
         ++cur_frame;
 
-
-        if(( DeathAnimations->size == 0 && (!player_1_present && !player_2_present) || !meteor_present)){
-            ClearList(objList,freeListItem);
-            ClearList(DeathAnimations,freeDeath);
-            AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
-            AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-            for(i=0; i< MAX_METEORS; ++i){
-                AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
+        if(DeathAnimations->size == 0){
+            if(( !player_1_present && !player_2_present) ||   !meteor_present ){
+                ClearList(objList,freeListItem);
+                ClearList(DeathAnimations,freeDeath);
+                AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
+                AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+                for(i=0; i< MAX_METEORS; ++i){
+                    AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
+                }
+                continue;
             }
-            continue;
         }
 
     }

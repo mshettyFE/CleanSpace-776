@@ -7,14 +7,6 @@
 #include <stdio.h>
 #include "object.h"
 #include "Death.h"
-extern unsigned int AAAAAAAAAAAAAAAAAA;
-extern unsigned int BBBBBBBBBBBBBBBBBB;
-extern unsigned int CCCCCCCCCCCCCCCCCC;
-extern unsigned int DDDDDDDDDDDDDDDDDD;
-extern unsigned int OOOOOOOOOOOOOOOOOO;
-extern unsigned int XXXXXXXXXXXXXXXXXX;
-extern unsigned int YYYYYYYYYYYYYYYYYY;
-extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
 
 extern unsigned char meteor_present;
 
@@ -47,7 +39,7 @@ LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type){
     temp->prev = opt;
     return opt;
 }
-
+/*
 LNode* AddToTail(struct List* list, void* obj, unsigned char obj_type){
     LNode* temporary;
     LNode* opt = malloc(sizeof(LNode));
@@ -66,24 +58,6 @@ LNode* AddToTail(struct List* list, void* obj, unsigned char obj_type){
     temporary->next = opt;
     opt->prev = temporary;
     return list->tail;
-}
-
-LNode* AddNodeToHead(struct List* list, LNode* opt){
-    LNode* temp;
-    if(!opt){return NULL;}
-    list->size += 1;
-    opt->prev = NULL;
-    if(list->head == NULL){
-        list->head = opt;
-        list->tail = opt;
-        opt->next = NULL;
-        return opt;
-    }
-    temp = list->head;
-    list->head = opt;
-    opt->next = temp;
-    temp->prev = opt;
-    return opt;
 }
 
 LNode* AddNodeToTail(struct List* list, LNode* opt){
@@ -105,6 +79,25 @@ LNode* AddNodeToTail(struct List* list, LNode* opt){
 }
 
 
+*/
+
+LNode* AddNodeToHead(struct List* list, LNode* opt){
+    LNode* temp;
+    if(!opt){return NULL;}
+    list->size += 1;
+    opt->prev = NULL;
+    if(list->head == NULL){
+        list->head = opt;
+        list->tail = opt;
+        opt->next = NULL;
+        return opt;
+    }
+    temp = list->head;
+    list->head = opt;
+    opt->next = temp;
+    temp->prev = opt;
+    return opt;
+}
 
 LNode* getNext(LNode* node){
     if(node){
@@ -308,7 +301,6 @@ LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, uns
                     continue;
                 }
             }
-            if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_BULLET_ID)){}
 
 // if update_death, then add objects to Death queue. Don't add bullets to Death
             if(update_death){

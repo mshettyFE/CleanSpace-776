@@ -11,10 +11,6 @@
 #include "gen/assets/Small.h"
 #include "Bullet.h"
 
-extern unsigned int XXXXXXXXXXXXXXXXXX;
-extern unsigned int YYYYYYYYYYYYYYYYYY;
-extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
-
 extern unsigned char player_1_present;
 extern unsigned char player_2_present;
 //#define MONITOR_P1

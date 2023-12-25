@@ -33,9 +33,9 @@ struct List* initList();
 LNode* getNext(LNode* node);
 
 LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type);
-LNode* AddToTail(struct List* list, void* obj, unsigned char obj_type);
+//LNode* AddToTail(struct List* list, void* obj, unsigned char obj_type);
 
-LNode* AddNodeToTail(struct List* list, LNode* opt);
+//LNode* AddNodeToTail(struct List* list, LNode* opt);
 LNode* AddNodeToHead(struct List* list, LNode* opt);
 
 

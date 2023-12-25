@@ -1,20 +1,14 @@
 #include "Death.h"
 #include "player.h"
 #include "Bullet.h"
+#include "Meteor.h"
 #include "object.h"
 #include "globals.h"
 #include <stdlib.h>
 
-extern unsigned int AAAAAAAAAAAAAAAAAA ;
-extern unsigned int OOOOOOOOOOOOOOOOOO ;
-extern unsigned int XXXXXXXXXXXXXXXXXX ;
-extern unsigned int YYYYYYYYYYYYYYYYYY ;
-extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
-
-
 LNode* initDeathAnim(LNode* node){
     struct Player* pid;
-    struct Bullet* bid;
+    struct Meteor* metr_id;
     struct DeathAnim* anim;
     LNode* out;
     if(node){
@@ -43,9 +37,22 @@ LNode* initDeathAnim(LNode* node){
             return NULL;
             break;
         case OBJ_METEOR_ID:
-            free(anim);
-            return NULL;
-            break;        
+            metr_id = (struct Meteor*) node->item;
+            if(metr_id == NULL){
+                free(anim);
+                return NULL;
+            }
+            switch (metr_id->meteor_type)
+            {
+            case BIG_METEOR_SIZE:
+                anim->starting_frame = PLAYER_ONE_DEATH_START;
+                break;
+            case SMALL_METEOR_SIZE:
+                anim->starting_frame = PLAYER_TWO_DEATH_START;
+                break;
+            }
+                anim->obj = initObject(metr_id->obj->x.b.msb, metr_id->obj->y.b.msb, 0, 0, DEATH_ANIM_SIZE,&ASSET__Death__Death_json, DEATH_BANK, anim->starting_frame, SPRITE_FLIP_NONE);
+            break;
         }
     anim->counter = 0;
     out  = malloc(sizeof(LNode));
