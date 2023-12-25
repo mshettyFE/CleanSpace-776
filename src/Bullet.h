@@ -12,7 +12,7 @@
 
 #define BULLET_FRAME_COUNTER 30
 #define BULLET_FRAME_DELTA 4
-#define BULLET_LIFETIME 255
+#define BULLET_LIFETIME 100
 
 struct Bullet{
     struct Object* obj;
@@ -25,7 +25,7 @@ struct Bullet* initBullet(const coordinate* a_x,  const coordinate* a_y, const c
 //struct Bullet* initBullet(const signed int a_x,  const signed int a_y, const signed int  a_v_x, const signed int a_v_y, char a_bank, char origin);
 
 void freeBullet(LNode* node);
-LNode* UpdateBullet(struct List* objList, LNode* node);
+LNode* UpdateBullet(struct List* objList, LNode* node, struct List* Death);
 
 
 #endif

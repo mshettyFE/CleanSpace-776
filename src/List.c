@@ -66,7 +66,7 @@ LNode* getNext(LNode* node){
 
 
 // assumes that node exists in list. Returns next pointer
-LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
+LNode* Remove(struct List* list, LNode* it, struct List* death, void(*freeItem)(LNode* cur) ){
     LNode* previous;
     LNode* next_one;
     if(it){
@@ -98,7 +98,7 @@ LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
     return NULL;
 }
 
-void ClearList(struct List* list, void(*freeData)(LNode* cur)){
+void ClearList(struct List* list, struct List* Death, void(*freeData)(LNode* cur)){
     LNode* tmp;
     LNode* cur;
     if(list==NULL){
@@ -106,7 +106,7 @@ void ClearList(struct List* list, void(*freeData)(LNode* cur)){
     }
     cur = list->head;
     while(cur){
-        cur = Remove(list,cur,freeData);
+        cur = Remove(list,cur,Death, freeData);
     }
 }
 
@@ -124,21 +124,21 @@ void freeListItem(LNode* cur){
 }
 
 
-void TraverseList(struct List* list){
+void TraverseList(struct List* list, struct List* Death){
     LNode* cur = list->head;
     while(cur){
-        cur =ListItemAction(list, cur);
+        cur =ListItemAction(list, cur, Death);
     }
 }
 
-LNode* ListItemAction(struct List* list, LNode* item){
+LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
     if(item){
         switch(item->obj_type){
             case OBJ_PLAYER_ID:
-                return UpdatePlayer(list, item);
+                return UpdatePlayer(list, item, Death);
                 break;
             case OBJ_BULLET_ID:
-                return UpdateBullet(list, item);
+                return UpdateBullet(list, item, Death);
                 break;
         }
     }

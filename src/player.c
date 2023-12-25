@@ -43,7 +43,7 @@ void freePlayer(LNode* node){
     free(node);
 }
 
-LNode* UpdatePlayer(struct List* objList, LNode* node){
+LNode* UpdatePlayer(struct List* objList, LNode* node, struct List* Death){
     int player_inpts;
     int old_player_inpts;
     char switch_flip=0;

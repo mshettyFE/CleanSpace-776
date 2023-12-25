@@ -36,15 +36,14 @@ LNode* getNext(LNode* node);
 LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type);
 LNode* AddToTail(struct List* list, void* obj, unsigned char obj_type);
 
-void ClearList(struct List* list, void(*freeData)(LNode* cur));
+void ClearList(struct List* list, struct List* Death, void(*freeData)(LNode* cur));
 
-LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) );
+LNode* Remove(struct List* list, LNode* it, struct List* death, void(*freeItem)(LNode* cur) );
 
 void freeListItem(LNode* cur);
 
-void TraverseList(struct List* list);
-
-LNode* ListItemAction(struct List* list, LNode* item);
+void TraverseList(struct List* list, struct List* Death);
+LNode* ListItemAction(struct List* list, LNode* item, struct List* Death);
 
 //void PrintList(struct List* list, void(*print)(void* data));
 //void printItem(LNode* cur);

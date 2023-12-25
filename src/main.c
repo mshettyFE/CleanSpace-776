@@ -6,7 +6,6 @@
 #include "player.h"
 #include "globals.h"
 #include "List.h"
-#include "SpatialHash.h"
 #include <stdlib.h>
 
 unsigned int AAAAAAAAAAAAAAAAAA = 50;
@@ -36,7 +35,6 @@ int main () {
 
     objList = initList();
     DeathAnimations = initList();
-    SpatialAcc = initHash();
 
     flip_pages();
     clear_border(0);
@@ -64,7 +62,7 @@ int main () {
 // update screen with objects (ignore what needs to be added/deleted for now)
 // For each new object to be created, add to the tree
 // For each new object to be deleted, remove from the tree
-        TraverseList(objList);
+        TraverseList(objList, DeathAnimations);
 
         await_draw_queue();
         sleep(1);

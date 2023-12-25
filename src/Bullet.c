@@ -41,7 +41,7 @@ void freeBullet(LNode* node){
     free(node);
 }
 
-LNode* UpdateBullet(struct List* objList, LNode* node){
+LNode* UpdateBullet(struct List* objList, LNode* node, struct List*  Death){
     struct Bullet* blt;
     struct LNode* output;
     LNode* nxt;
@@ -56,7 +56,7 @@ LNode* UpdateBullet(struct List* objList, LNode* node){
         blt->display_counter -= 1;
         blt->lifetime -= 1;
         if(blt->lifetime == 0){
-            output =  Remove(objList,node, freeBullet);
+            output =  Remove(objList,node,Death, &freeBullet);
             return output;
         }
         if(blt->display_counter == 0){
