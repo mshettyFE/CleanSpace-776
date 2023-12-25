@@ -4,6 +4,7 @@
 #include "Meteor.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "object.h"
 #include "Death.h"
 extern unsigned int OOOOOOOOOOOOOOOOOO;
 extern unsigned int XXXXXXXXXXXXXXXXXX;
@@ -232,20 +233,23 @@ LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
     return NULL;
 }
 
-/*
-void printItem(LNode* cur){
-  switch(cur->obj_type){
-    case OBJ_ID:
-        break;
-    case OBJ_PLAYER_ID:
-        break;
-    case OBJ_METEOR_ID:
-        break;
-    case OBJ_BULLET_ID:
-        break;
-    case OBJ_DEATH_ID:
-        break;
+struct Object* extractObj(LNode* item){
+    struct Object* out = NULL;
+    if(!item){return NULL;}
+    switch (item->obj_type)
+    {
+        case OBJ_DEATH_ID:
+            out = ((struct DeathAnim*) item->item)->obj;
+            break;
+        case OBJ_PLAYER_ID:
+            out = ((struct Player*) item->item)->obj;
+            break;
+        case OBJ_BULLET_ID:
+            out = ((struct Bullet*) item->item)->obj;
+            break;
+        case OBJ_METEOR_ID:
+            out = ((struct Meteor*) item->item)->obj;
+            break;    
     }
-  }
-*/
-
+    return out;
+}

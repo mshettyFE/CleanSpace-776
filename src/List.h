@@ -9,6 +9,8 @@
 #define DONT_CLEAR_DATA 0
 #define CLEAR_DATA 1
 
+#include "object.h"
+
 typedef struct ListNode{
 // linked list containing bounding boxes of objects in scene
     void* item;
@@ -51,7 +53,10 @@ void TraverseDeathList(struct List* list);
 
 LNode* ListItemAction(struct List* list, LNode* item, struct List* Death);
 
-//void PrintList(struct List* list, void(*print)(void* data));
-//void printItem(LNode* cur);
+struct Object* extractObj(LNode* item);
+
+unsigned char cmp(LNode* node1, LNode* node2);
+
+void DealWithCollisions(struct List* list, LNode* cur, struct List* Death);
 
 #endif

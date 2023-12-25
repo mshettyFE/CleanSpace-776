@@ -17,10 +17,10 @@ struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const co
 
     switch (origin)
     {
-        case 0:
+        case PLYR_ONE_ID:
             blt->obj = initObjectCoord( a_x, a_y, a_v_x, a_v_y, 5, &ASSET__Bullets__Bullets_json, a_bank, 0, SPRITE_FLIP_NONE);
             break;
-        case 1:
+        case PLYR_TWO_ID:
             blt->obj = initObjectCoord( a_x, a_y, a_v_x, a_v_y, 5, &ASSET__Bullets__Bullets_json, a_bank, 1, SPRITE_FLIP_NONE);
             break;
     }
