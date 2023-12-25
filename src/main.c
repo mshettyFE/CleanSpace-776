@@ -69,7 +69,6 @@ int main () {
 
 
     for(i=0; i< 1; ++i){
-        AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
         AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , BIG_METEOR), OBJ_METEOR_ID);
     }
 

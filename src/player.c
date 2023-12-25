@@ -11,6 +11,12 @@
 #include "gen/assets/Small.h"
 #include "Bullet.h"
 
+extern unsigned int XXXXXXXXXXXXXXXXXX;
+extern unsigned int YYYYYYYYYYYYYYYYYY;
+extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
+
+//#define MONITOR_P1
+
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, unsigned char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
     plyr->player_num = a_player_num;
@@ -62,6 +68,13 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
             return NULL;
         }
         plyr = (struct Player*) node->item;
+
+#ifdef MONITOR_P1
+        XXXXXXXXXXXXXXXXXX = plyr->obj->x.i;
+        YYYYYYYYYYYYYYYYYY = plyr->obj->y.i;
+        ZZZZZZZZZZZZZZZZZZZZZZZ();
+
+#endif
 
         if(plyr->bullet_timer >0){
             plyr->bullet_timer -= 1;

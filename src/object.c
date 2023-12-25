@@ -56,8 +56,8 @@ struct Object* initObjectCoord( const coordinate*  a_x, const  coordinate* a_y, 
 }
 
 void updateObject(struct Object* obj){
-  obj->x.i += obj->v_x.i;
-  obj->y.i += obj->v_y.i;
+  obj->x.i = (obj->x.i+obj->v_x.i) & 0x7FFF;
+  obj->y.i = (obj->y.i+obj->v_y.i) & 0x7FFF;
   draw_sprite_frame(obj->sprite_table, obj->sprite_table_bank, obj->x.b.msb, obj->y.b.msb, obj->cur_frame, obj->cur_flip, obj->bank);
 }
 
