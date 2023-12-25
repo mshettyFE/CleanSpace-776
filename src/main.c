@@ -19,7 +19,7 @@ unsigned char player_1_present = 0;
 unsigned char player_2_present = 0;
 unsigned char meteor_present = 0;
 
-#define MAX_METEORS 5
+#define MAX_METEORS 4
 
 int main () {
     char i = 0;
