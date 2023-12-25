@@ -22,6 +22,7 @@ unsigned int YYYYYYYYYYYYYYYYYY = 20;
 void ZZZZZZZZZZZZZZZZZZZZZZZ(){};
 
 int main () {
+    char i = 0;
     char col = 30, row = 20;
     char col_two = 60, row_two = 40;
     char dx = 1, dy = 1;
@@ -54,17 +55,21 @@ int main () {
 //    players[PLYR_ONE_ID] =  initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID);
 //    players[PLYR_TWO_ID] =  initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID);
 
-/*
     AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
     AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+
+/*
     t = AddToTail(objList,initPlayer(  90,  90, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
 //    AddNodeToHead(DeathAnimations,initDeathAnim(t));
 
 */
 
-/*
 
-*/
+    for(i=0; i< 5; ++i){
+        AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
+        AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , BIG_METEOR), OBJ_METEOR_ID);
+    }
+
 
 
     while (1) {//  Run forever

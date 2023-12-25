@@ -18,10 +18,10 @@ struct Player* initPlayer(  char a_x,  char a_y, char a_bank, unsigned char a_pl
     switch (plyr->player_num)
     {
     case PLYR_ONE_ID:
-        plyr->obj = initObject( a_x, a_y, 0, 0, 4, &ASSET__Small__Small_json, a_bank, PLAYER_ONE_STRT_FRAME, SPRITE_FLIP_NONE);
+        plyr->obj = initObject( a_x, a_y, 0, 0, 8, &ASSET__Small__Small_json, a_bank, PLAYER_ONE_STRT_FRAME, SPRITE_FLIP_NONE);
         break;
     case PLYR_TWO_ID:
-        plyr->obj = initObject( a_x, a_y, 0, 0, 4, &ASSET__Small__Small_json, a_bank, PLAYER_TWO_STRT_FRAME, SPRITE_FLIP_NONE);
+        plyr->obj = initObject( a_x, a_y, 0, 0, 8, &ASSET__Small__Small_json, a_bank, PLAYER_TWO_STRT_FRAME, SPRITE_FLIP_NONE);
         break;    
     default:
         break;
