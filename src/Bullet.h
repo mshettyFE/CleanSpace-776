@@ -25,7 +25,7 @@ struct Bullet* initBullet(const coordinate* a_x,  const coordinate* a_y, const c
 //struct Bullet* initBullet(const signed int a_x,  const signed int a_y, const signed int  a_v_x, const signed int a_v_y, char a_bank, char origin);
 
 void freeBullet(LNode* node);
-LNode* UpdateBullet(struct List* objList, LNode* node, struct List* Death);
+LNode* UpdateBullet(struct List* objList, LNode* node);
 
 
 #endif

@@ -21,11 +21,11 @@ struct Meteor* initMeteor(const coordinate a_x,const  coordinate  a_y, char a_me
     {
     case BIG_METEOR:
         mtr->obj = initObjectInt( a_x.i, a_y.i, gen_rand_x_vel, gen_rand_y_vel ,
-             5, &ASSET__Meteor__Meteor_json, METEOR_BANK, gen_big_meteor_frame , SPRITE_FLIP_NONE);
+             8, &ASSET__Meteor__Meteor_json, METEOR_BANK, gen_big_meteor_frame , SPRITE_FLIP_NONE);
         break;
     case SMALL_METEOR:
         mtr->obj = initObjectInt( a_x.i, a_y.i, gen_rand_x_vel, gen_rand_y_vel ,
-             5, &ASSET__SmallMeteor__SmallMeteor_json, SMALL_METEOR_BANK, gen_small_meteor_frame , SPRITE_FLIP_NONE);
+             4, &ASSET__SmallMeteor__SmallMeteor_json, SMALL_METEOR_BANK, gen_small_meteor_frame , SPRITE_FLIP_NONE);
         break;
     }
     return mtr;
@@ -43,7 +43,7 @@ void freeMeteor(LNode* node){
     free(node);
 }
 
-LNode* UpdateMeteor(struct List* objList, LNode* node, struct List*  Death){
+LNode* UpdateMeteor(struct List* objList, LNode* node){
     struct Meteor* mtr;
     struct LNode* output;
     LNode* nxt;
@@ -51,8 +51,6 @@ LNode* UpdateMeteor(struct List* objList, LNode* node, struct List*  Death){
     if(node->obj_type != OBJ_METEOR_ID){ return NULL;}
     mtr = (struct Meteor*) node->item;
     if(mtr){
-//            output =  Remove(objList,node,Death, &freeMeteor);
-//            return output;
         updateObject(mtr->obj);
         output = node->next;
         return output;

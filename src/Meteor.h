@@ -25,6 +25,6 @@ struct Meteor{
 
 struct Meteor* initMeteor(const coordinate a_x,const  coordinate  a_y, char a_meteor_type);
 void freeMeteor(LNode* node);
-LNode* UpdateMeteor(struct List* objList, LNode* node, struct List* Death);
+LNode* UpdateMeteor(struct List* objList, LNode* node);
 
 #endif

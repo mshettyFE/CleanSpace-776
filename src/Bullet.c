@@ -18,10 +18,10 @@ struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const co
     switch (origin)
     {
         case PLYR_ONE_ID:
-            blt->obj = initObjectCoord( a_x, a_y, a_v_x, a_v_y, 5, &ASSET__Bullets__Bullets_json, a_bank, 0, SPRITE_FLIP_NONE);
+            blt->obj = initObjectCoord( a_x, a_y, a_v_x, a_v_y, 3, &ASSET__Bullets__Bullets_json, a_bank, 0, SPRITE_FLIP_NONE);
             break;
         case PLYR_TWO_ID:
-            blt->obj = initObjectCoord( a_x, a_y, a_v_x, a_v_y, 5, &ASSET__Bullets__Bullets_json, a_bank, 1, SPRITE_FLIP_NONE);
+            blt->obj = initObjectCoord( a_x, a_y, a_v_x, a_v_y, 3, &ASSET__Bullets__Bullets_json, a_bank, 1, SPRITE_FLIP_NONE);
             break;
     }
     return blt;
@@ -41,7 +41,7 @@ void freeBullet(LNode* node){
     free(node);
 }
 
-LNode* UpdateBullet(struct List* objList, LNode* node, struct List*  Death){
+LNode* UpdateBullet(struct List* objList, LNode* node){
     struct Bullet* blt;
     struct LNode* output;
     LNode* nxt;
@@ -56,7 +56,7 @@ LNode* UpdateBullet(struct List* objList, LNode* node, struct List*  Death){
         blt->display_counter -= 1;
         blt->lifetime -= 1;
         if(blt->lifetime == 0){
-            output =  Remove(objList,node,Death, &freeBullet);
+            output =  Remove(objList,node, &freeBullet);
             return output;
         }
         if(blt->display_counter == 0){
