@@ -10,6 +10,8 @@
 
 #include "gen/assets/Small.h"
 #include "Bullet.h"
+#include "dynawave.h"
+#include "music.h"
 
 extern unsigned char player_1_present;
 extern unsigned char player_2_present;

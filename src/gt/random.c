@@ -8,7 +8,7 @@ int xorshift16(int x) {
     return x;
 }
 
-int rnd_seed = 234;
+int rnd_seed = 1;
 
 int rnd() {
     rnd_seed = xorshift16(rnd_seed);

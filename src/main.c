@@ -1,5 +1,7 @@
 #include "random.h"
 #include "gametank.h"
+#include "dynawave.h"
+#include "music.h"
 #include "drawing_funcs.h"
 #include "gen/assets/Small.h"
 #include "gen/assets/Bullets.h"
@@ -32,6 +34,9 @@ int main () {
 
     objList = initList();
     DeathAnimations = initList();
+
+    init_dynawave();
+    init_music();
 
     flip_pages();
     clear_border(0);
@@ -71,10 +76,23 @@ int main () {
         await_draw_queue();
         sleep(1);
         flip_pages();
+        tick_music();
         ++cur_frame;
+
+        if(player1_buttons & INPUT_MASK_C || player2_buttons & INPUT_MASK_C){
+                ClearList(objList,freeListItem);
+                ClearList(DeathAnimations,freeDeath);
+                AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
+                AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+                for(i=0; i< MAX_METEORS; ++i){
+                    AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
+                }
+                continue;
+        }
 
         if(DeathAnimations->size == 0){
             if(( !player_1_present && !player_2_present) ||   !meteor_present ){
+//            if(  !meteor_present ){
                 ClearList(objList,freeListItem);
                 ClearList(DeathAnimations,freeDeath);
                 AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);

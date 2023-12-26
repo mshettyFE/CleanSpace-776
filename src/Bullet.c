@@ -3,12 +3,6 @@
 #include "Bullet.h"
 #include "player.h"
 
-extern unsigned int AAAAAAAAAAAAAAAAAA;
-extern unsigned int OOOOOOOOOOOOOOOOOO;
-extern unsigned int XXXXXXXXXXXXXXXXXX;
-extern unsigned int YYYYYYYYYYYYYYYYYY;
-extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
-
 struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const coordinate*  a_v_x, const coordinate* a_v_y, char a_bank, char origin){
     struct Bullet* blt = malloc(sizeof(struct Bullet));
     if(!blt){return NULL;}

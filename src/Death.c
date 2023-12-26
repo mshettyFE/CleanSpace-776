@@ -13,15 +13,10 @@ LNode* initDeathAnim(LNode* node){
     LNode* out;
     if(node){
       anim = malloc(sizeof(struct DeathAnim));
-      if(!anim){return NULL;}
         switch (node->obj_type)
         {
         case OBJ_PLAYER_ID:
             pid = (struct Player*) node->item;
-            if(pid == NULL){
-                free(anim);
-                return NULL;
-            }
             switch (pid->player_num)
             {
             case PLYR_ONE_ID:
@@ -55,18 +50,8 @@ LNode* initDeathAnim(LNode* node){
                 anim->obj = initObject(metr_id->obj->x.b.msb, metr_id->obj->y.b.msb, 0, 0, DEATH_ANIM_SIZE,&ASSET__Death__Death_json, DEATH_BANK, anim->starting_frame, SPRITE_FLIP_NONE);
             break;
         }
-    if(anim->obj == NULL){
-        free(anim->obj);
-        free(anim);
-        return NULL;
-    }
     anim->counter = 0;
     out  = malloc(sizeof(LNode));
-    if(!out){
-        free(anim->obj);
-        free(anim);
-        return NULL;
-    }
     out->item = anim;
     out->obj_type = OBJ_DEATH_ID;
     return out;
