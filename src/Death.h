@@ -24,8 +24,8 @@ Death animations.
 
 struct DeathAnim{
     struct Object* obj;
-    unsigned char starting_frame;
-    unsigned char counter; // how long until next frame is played
+    char starting_frame;
+    char counter; // how long until next frame is played
 };
 
 LNode* initDeathAnim(LNode* obj);

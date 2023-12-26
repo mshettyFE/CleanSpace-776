@@ -19,7 +19,7 @@
 
 struct Meteor{
     struct Object* obj;
-    unsigned char meteor_type; // if meteor is big or small
+    char meteor_type; // if meteor is big or small
 };
 
 struct Meteor* initMeteor(coordinate a_x, coordinate  a_y, char a_meteor_type);

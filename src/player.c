@@ -14,10 +14,10 @@
 #include "music.h"
 
 // flags to see if player1/2 are present
-extern unsigned char player_1_present;
-extern unsigned char player_2_present;
+extern char player_1_present;
+extern char player_2_present;
 
-struct Player* initPlayer(  char a_x,  char a_y, char a_bank, unsigned char a_player_num){
+struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
     plyr->player_num = a_player_num;
     plyr->bullet_timer = BULLET_COOLDOWN;
@@ -52,7 +52,7 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
     int player_inpts;
     int old_player_inpts;
     char switch_flip=0;
-    unsigned char index;
+    char index;
     struct Bullet* blt;
     struct Player* plyr;
     coordinate new_vel_x;

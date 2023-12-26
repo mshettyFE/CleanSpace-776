@@ -19,11 +19,11 @@
 
 struct Player{
     struct Object* obj;
-    unsigned char player_num;
-    unsigned char bullet_timer; // how long until you can shoot again
+    char player_num;
+    char bullet_timer; // how long until you can shoot again
 };
 
-struct Player* initPlayer(char a_x,  char a_y, char a_bank, unsigned char a_player_num);
+struct Player* initPlayer(char a_x,  char a_y, char a_bank, char a_player_num);
 
 void freePlayer(LNode* node);
 

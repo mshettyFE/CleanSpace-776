@@ -9,8 +9,8 @@ Q8.8 Fixed point representations of cosine and sine. See TrigCalcs.xlsx for deri
 
 const signed char p_cosine_msb[8] = {0,0,0,0,0,0,0,1};
 const signed char p_sine_msb[8] = {1,0,0,0,0,0,0,0};
-const unsigned char p_cosine_lsb[8] = {0,56,111,159,200,230,249,0};
-const unsigned char p_sine_lsb[8] = {0,249,230,200,159,111,56,0};
+const char p_cosine_lsb[8] = {0,56,111,159,200,230,249,0};
+const char p_sine_lsb[8] = {0,249,230,200,159,111,56,0};
 
 
 coordinate create_coord(char msb,  char lsb){

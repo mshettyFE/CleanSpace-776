@@ -9,7 +9,7 @@
 #include "Death.h"
 
 // flag to see if meteor in list
-extern unsigned char meteor_present;
+extern char meteor_present;
 
 // toggle collision detection
 #define USE_COL
@@ -161,7 +161,7 @@ LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
             return postCollisions;
         }
 #endif
-// if postCollisions = original, this means that the node still is in the queue and we need to update it's data
+// if postCollisions = original, this means that the node still is in the queue and we need to update its data
         switch(item->obj_type){
             case OBJ_PLAYER_ID:
                 return UpdatePlayer(list, item);
@@ -199,7 +199,7 @@ struct Object* extractObj(LNode* item){
     return out;
 }
 
-unsigned char cmp(LNode* node1, LNode* node2){
+char cmp(LNode* node1, LNode* node2){
     struct Object* ob1;
     struct Object* ob2;
     unsigned int dx,dy, size;
@@ -224,11 +224,11 @@ unsigned char cmp(LNode* node1, LNode* node2){
 
 // returns current node if no collisions detected. Returns next node if collisions were detected
 // populates Death with dying animations
-LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, unsigned char update_death ){
+LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, char update_death ){
     LNode * og;
     LNode* itr;
     LNode* output;
-    unsigned char collision;
+    char collision;
     unsigned int x; // profiler variable
     output = cur;
     og = cur;

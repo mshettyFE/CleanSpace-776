@@ -18,22 +18,26 @@
 #include <stdlib.h>
 
 // flags to check if these objects exist in scene
-unsigned char player_1_present = 0;
-unsigned char player_2_present = 0;
-unsigned char meteor_present = 0;
+char player_1_present = 0;
+char player_2_present = 0;
+char meteor_present = 0;
 
-#define MAX_METEORS 4
+#define MAX_METEORS 5
 
-// toggle if players or meteors should be generated (for debugging)
-#define INCLUDE_PLAYERS
-#define INCLUDE_METEORS
-
-int main () {
+void GenField(struct List* objList, struct List* death){
     char i = 0;
 // initial position of player 1
     char col = 32, row = 64;
 // initial position of player 2
     char col_two = 96, row_two = 64;
+    AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
+    AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+    for(i=0; i< MAX_METEORS; ++i){
+        AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
+    }
+}
+
+int main () {
     char cur_frame = 0;
     struct List* objList;
     struct List* DeathAnimations;
@@ -58,15 +62,8 @@ int main () {
     load_spritesheet(&ASSET__Meteor__Meteor_bmp, METEOR_BANK);
     load_spritesheet(&ASSET__SmallMeteor__SmallMeteor_bmp, SMALL_METEOR_BANK);
 
-#ifdef INCLUDE_PLAYERS
-    AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
-    AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-#endif
-#ifdef INCLUDE_METEORS
-    for(i=0; i< MAX_METEORS; ++i){
-        AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
-    }
-#endif
+    GenField(objList, DeathAnimations);
+
     while (1) {//  Run forever
         player_1_present  = 0;
         player_2_present  = 0;
@@ -91,43 +88,15 @@ int main () {
         if(player1_buttons & INPUT_MASK_C || player2_buttons & INPUT_MASK_C){
                 ClearList(objList);
                 ClearList(DeathAnimations);
-#ifdef INCLUDE_PLAYERS
-                AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
-                AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-#endif
-#ifdef INCLUDE_METEORS
-                for(i=0; i< MAX_METEORS; ++i){
-                    AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
-                }
-#endif
+                GenField(objList, DeathAnimations);
                 continue;
         }
 
         if(DeathAnimations->size == 0){
-            if(
-#ifdef INCLUDE_PLAYERS
-                ( !player_1_present && !player_2_present) 
-#endif
-#ifdef INCLUDE_PLAYERS
-#ifdef INCLUDE_METEORS
-                ||
-#endif
-#endif 
-#ifdef INCLUDE_METEORS               
-              !meteor_present
-#endif
-                 ){
+            if(   ( !player_1_present && !player_2_present)  ||  !meteor_present){
                 ClearList(objList);
                 ClearList(DeathAnimations);
-#ifdef INCLUDE_PLAYERS
-                AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
-                AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-#endif
-#ifdef INCLUDE_METEORS
-                for(i=0; i< MAX_METEORS; ++i){
-                    AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
-                }
-#endif
+                GenField(objList, DeathAnimations);
                 continue;
             }
         }

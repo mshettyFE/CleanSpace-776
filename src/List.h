@@ -21,7 +21,6 @@ You would need to search for node's position first.
 #define OBJ_METEOR_ID 3
 
 // Weather to update death queue or not.
-//Could be used to randomly generate objects on screen, check for collisions without generating animations. Didn't do this though.
 #define DONT_UPDATE_DEATH 0
 #define UPDATE_DEATH 1
 
@@ -68,10 +67,10 @@ LNode* ListItemAction(struct List* list, LNode* item, struct List* Death);
 struct Object* extractObj(LNode* item);
 
 // compare two nodes to see if their objects collide. No self collisions
-unsigned char cmp(LNode* node1, LNode* node2);
+char cmp(LNode* node1, LNode* node2);
 
 // returns current node if no collisions detected. Returns next node if collisions were detected
 // populates Death with dying animations
-LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, unsigned char update_death );
+LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, char update_death );
 
 #endif
