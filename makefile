@@ -12,7 +12,7 @@ else
 endif
 
 #set this for your output ROM file name
-TARGET=game.gtr
+TARGET= ClearSpace-776.gtr
 
 EMUPATH=~/GameTankEmulator
 

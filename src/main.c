@@ -18,6 +18,7 @@
 #include "globals.h"
 #include "List.h"
 #include "banking.h"
+#include "gt/feature/text/text.h"
 #include <stdlib.h>
 
 // flags to check if these objects exist in scene
@@ -52,9 +53,12 @@ void displayText(const char* str){
     clear_screen(0);
     clear_border(0);
     await_draw_queue();
+    flip_pages();
     while(1){
         cursorX = 0;
         cursorY = 12;
+//        draw_sprite_frame(&ASSET__Background__background_json, 127,127,0,0,BACK_BANK);
+//        print_text(str);
         print(str);
         update_inputs();
         if( ((player1_buttons & INPUT_MASK_START & ~player1_old_buttons ) ) ||
@@ -73,10 +77,10 @@ int main () {
     objList = initList();
     DeathAnimations = initList();
 
-    init_dynawave();
-    init_music();
+//    init_dynawave();
+//    init_music();
 
-    load_spritesheet(&ASSET__font__fiend_fonts_bmp, FONT_BANK);
+    load_font(FONT_BANK);
     load_spritesheet(&ASSET__Death__Death_bmp,DEATH_BANK);
     load_spritesheet(&ASSET__Small__Small_bmp, SMALL_BANK);
     load_spritesheet(&ASSET__Bullets__Bullets_bmp, BULLET_BANK);
@@ -131,7 +135,7 @@ int main () {
         await_draw_queue();
         sleep(1);
         flip_pages();
-        tick_music();
+//        tick_music();
         ++cur_frame;
     }
 
