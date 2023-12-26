@@ -28,6 +28,7 @@ char meteor_present = 0;
 
 char paused = 0;
 
+#define MAX_METEORS 15
 
 void GenField(struct List* objList, struct List* death){
     char i = 0;
@@ -37,7 +38,7 @@ void GenField(struct List* objList, struct List* death){
     char col_two = 96, row_two = 64;
     AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
     AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-    for(i=0; i< rnd_range(5,15); ++i){
+    for(i=0; i< MAX_METEORS; ++i){
         AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
     }
 }
@@ -45,7 +46,6 @@ void GenField(struct List* objList, struct List* death){
 void displayText(const char* str){
     change_rom_bank(FONT_BANK);
 // clear both buffers of everything
-    flip_pages();
     clear_screen(0);
     clear_border(0);
     await_draw_queue();
@@ -66,7 +66,14 @@ void displayText(const char* str){
             break;
         }
         sleep(1);
+        flip_pages();
     }
+}
+
+void init_all(){
+    init_dynawave();
+    init_music();
+    init_graphics();
 }
 
 int main () {
@@ -74,11 +81,10 @@ int main () {
     struct List* objList;
     struct List* DeathAnimations;
 
+    init_all();
     objList = initList();
     DeathAnimations = initList();
 
-//    init_dynawave();
-//    init_music();
 
     load_font(FONT_BANK);
     load_spritesheet(&ASSET__Death__Death_bmp,DEATH_BANK);
