@@ -17,22 +17,23 @@
 #include "List.h"
 #include <stdlib.h>
 
+// flags to check if these objects exist in scene
 unsigned char player_1_present = 0;
 unsigned char player_2_present = 0;
 unsigned char meteor_present = 0;
 
-void ZZZZZZZZZZZZZZZZZZZZZZZZZ(){};
-
 #define MAX_METEORS 4
 
+// toggle if players or meteors should be generated (for debugging)
 #define INCLUDE_PLAYERS
 #define INCLUDE_METEORS
 
 int main () {
     char i = 0;
+// initial position of player 1
     char col = 32, row = 64;
+// initial position of player 2
     char col_two = 96, row_two = 64;
-    char dx = 1, dy = 1;
     char cur_frame = 0;
     struct List* objList;
     struct List* DeathAnimations;
@@ -43,6 +44,7 @@ int main () {
     init_dynawave();
     init_music();
 
+// clear screen of all garbage
     flip_pages();
     clear_border(0);
     await_draw_queue();
@@ -89,11 +91,15 @@ int main () {
         if(player1_buttons & INPUT_MASK_C || player2_buttons & INPUT_MASK_C){
                 ClearList(objList);
                 ClearList(DeathAnimations);
+#ifdef INCLUDE_PLAYERS
                 AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
                 AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+#endif
+#ifdef INCLUDE_METEORS
                 for(i=0; i< MAX_METEORS; ++i){
                     AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
                 }
+#endif
                 continue;
         }
 
@@ -113,16 +119,20 @@ int main () {
                  ){
                 ClearList(objList);
                 ClearList(DeathAnimations);
+#ifdef INCLUDE_PLAYERS
                 AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
                 AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
+#endif
+#ifdef INCLUDE_METEORS
                 for(i=0; i< MAX_METEORS; ++i){
                     AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
                 }
+#endif
                 continue;
             }
         }
 
     }
 
-  return (0);                                     //  We should never get here!
+  return (0);
 }

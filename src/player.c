@@ -13,13 +13,12 @@
 #include "dynawave.h"
 #include "music.h"
 
+// flags to see if player1/2 are present
 extern unsigned char player_1_present;
 extern unsigned char player_2_present;
-//#define MONITOR_P1
 
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, unsigned char a_player_num){
     struct Player* plyr = malloc(sizeof(struct Player));
-    if(!plyr){return NULL;}
     plyr->player_num = a_player_num;
     plyr->bullet_timer = BULLET_COOLDOWN;
     switch (plyr->player_num)
@@ -32,10 +31,6 @@ struct Player* initPlayer(  char a_x,  char a_y, char a_bank, unsigned char a_pl
         break;    
     default:
         break;
-    }
-    if(plyr->obj == NULL){
-        free(plyr->obj);
-        free(plyr);
     }
     return plyr;
 }
@@ -60,8 +55,8 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
     unsigned char index;
     struct Bullet* blt;
     struct Player* plyr;
-    coordinate acceleration_x;
-    coordinate acceleration_y;
+    coordinate new_vel_x;
+    coordinate new_vel_y;
     coordinate bullet_vel_x;
     coordinate bullet_vel_y;
     coordinate bullet_pos_x;
@@ -72,13 +67,6 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
             return NULL;
         }
         plyr = (struct Player*) node->item;
-
-#ifdef MONITOR_P1
-        XXXXXXXXXXXXXXXXXX = plyr->obj->x.i;
-        YYYYYYYYYYYYYYYYYY = plyr->obj->y.i;
-        ZZZZZZZZZZZZZZZZZZZZZZZ();
-
-#endif
 
         if(plyr->bullet_timer >0){
             plyr->bullet_timer -= 1;
@@ -98,7 +86,16 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
             index = plyr->obj->cur_frame - PLAYER_TWO_STRT_FRAME;
             break;
         }
-        
+
+/*
+  To rotate the player, we cycle through frames and orientations. At frames 0/7, depending on the direction,
+   we need to change the orientation to something else.Say that we are on frame 6 (pointed to the right) and we then press right.
+   We are now on frame 7, and need to transition from incrementing frames, to decrementing frames (since the next frame to the right is frame 6 FLIPPED across X)
+   AT frame 0 and 7, certain FLIP orientations have the same graphical output. Hence, at frames 0 and 7, we just cycle the orientation.
+   The order goes NONE-> Y -> BOTH -> X -> NONE. This follows the screen coordinates
+   NONE and BOTH increment frame counter, while X and Y decrement. This mapping allows smooth rotation.
+*/
+
         if(player_inpts & INPUT_MASK_RIGHT){
             switch (plyr->obj->cur_flip)
             {
@@ -133,6 +130,10 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
                     break;
             }
         }
+
+/*
+   Same logic as right, but cycle is reverse, and now NONE and BOTH decrement, but Y and X increment
+*/
         if(player_inpts & INPUT_MASK_LEFT){
             switch (plyr->obj->cur_flip)
             {
@@ -168,6 +169,7 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
             }
         }
 
+// specifying first frame of each player in sprite sheet
         switch(plyr->player_num){
             case PLYR_ONE_ID:
                 plyr->obj->cur_frame = index + PLAYER_ONE_STRT_FRAME;
@@ -177,40 +179,44 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
                 break;
         }
 
-        acceleration_x = gen_x_accel(index,plyr->obj->cur_flip);
+        new_vel_x = gen_x_vel(index,plyr->obj->cur_flip);
         if(player_inpts & INPUT_MASK_B){
-            acceleration_x.i = acceleration_x.i;
+            new_vel_x.i = new_vel_x.i;
         }
         else{
-            acceleration_x.i = acceleration_x.i>>1;
+            new_vel_x.i = new_vel_x.i>>1;
         }
-        acceleration_y = gen_y_accel(index,plyr->obj->cur_flip);
+        new_vel_y = gen_y_vel(index,plyr->obj->cur_flip);
+
+// speed up button
         if(player_inpts & INPUT_MASK_B){
-            acceleration_y.i = acceleration_y.i;
+            new_vel_y.i = new_vel_y.i;
         }
         else{
-            acceleration_y.i = acceleration_y.i>>1;
+// normal speed  downshifting by 1 since otherwise, too fast
+            new_vel_y.i = new_vel_y.i>>1;
         }
         
         if(player_inpts & INPUT_MASK_UP) {
-            plyr->obj->v_x.i = acceleration_x.i;
-            plyr->obj->v_y.i = acceleration_y.i;
+            plyr->obj->v_x.i = new_vel_x.i;
+            plyr->obj->v_y.i = new_vel_y.i;
         }
 
         if(player_inpts & INPUT_MASK_DOWN) {
-            plyr->obj->v_x.i = -1*acceleration_x.i;
-            plyr->obj->v_y.i = -1*acceleration_y.i;
+            plyr->obj->v_x.i = -1*new_vel_x.i;
+            plyr->obj->v_y.i = -1*new_vel_y.i;
         }
 
-
+// shooting button
         if(player_inpts & INPUT_MASK_A) {
             if(plyr->bullet_timer == 0){
                 plyr->bullet_timer = BULLET_COOLDOWN;
-                bullet_vel_x.i = acceleration_x.i<<1;
-                bullet_vel_y.i = acceleration_y.i<<1;
+// bullets move faster than player (gets stuck inside  player otherwise)
+                bullet_vel_x.i = new_vel_x.i<<2;
+                bullet_vel_y.i = new_vel_y.i<<2;
                 bullet_pos_x = plyr->obj->x;
                 bullet_pos_y = plyr->obj->y;
-                blt = initBullet(&bullet_pos_x, &bullet_pos_y, &bullet_vel_x, &bullet_vel_y, BULLET_BANK,plyr->player_num);
+                blt = initBullet(bullet_pos_x, bullet_pos_y, bullet_vel_x, bullet_vel_y, BULLET_BANK,plyr->player_num);
                 if(blt == NULL){
                     updateObject(plyr->obj);
                     return node->next;

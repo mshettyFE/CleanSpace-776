@@ -8,20 +8,21 @@
 #include "object.h"
 #include "Death.h"
 
+// flag to see if meteor in list
 extern unsigned char meteor_present;
 
+// toggle collision detection
 #define USE_COL
 
 struct List* initList(){
     struct List* out = malloc(sizeof(struct List));
-    if(!out){return NULL;}
     out->head = NULL;
     out->tail = NULL;
     out->size = 0;
     return out;
 }
 
-LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type){
+LNode* AddToHead(struct List* list, void* obj, char obj_type){
     LNode* temp;
     LNode* opt = malloc(sizeof(LNode));
     opt->obj_type = obj_type;
@@ -59,6 +60,7 @@ LNode* AddNodeToHead(struct List* list, LNode* opt){
     return opt;
 }
 
+// utility function to check if node argument is NULL before returning next
 LNode* getNext(LNode* node){
     if(node){
         return node->next;
@@ -66,7 +68,27 @@ LNode* getNext(LNode* node){
     return NULL;
 }
 
-// assumes that node exists in list. Returns next pointer
+void freeListItem(LNode* cur){
+// free node in list
+// NOTE: the sub calls in the switch statement should NOT free the current node. Let freeListItem do that
+    switch (cur->obj_type)
+    {
+    case OBJ_DEATH_ID:
+        freeDeath(cur);
+        break;
+    case OBJ_PLAYER_ID:
+        freePlayer(cur);
+        break;
+    case OBJ_BULLET_ID:
+        freeBullet(cur);
+        break;
+    case OBJ_METEOR_ID:
+        freeMeteor(cur);
+        break;
+    }
+    free(cur);
+}
+
 LNode* Remove(struct List* list, LNode* it ){
     LNode* previous;
     LNode* next_one;
@@ -113,26 +135,6 @@ void ClearList(struct List* list){
     }
 }
 
-void freeListItem(LNode* cur){
-    switch (cur->obj_type)
-    {
-    case OBJ_DEATH_ID:
-        freeDeath(cur);
-        break;
-    case OBJ_PLAYER_ID:
-        freePlayer(cur);
-        break;
-    case OBJ_BULLET_ID:
-        freeBullet(cur);
-        break;
-    case OBJ_METEOR_ID:
-        freeMeteor(cur);
-        break;
-    }
-    free(cur);
-}
-
-
 void TraverseList(struct List* list, struct List* Death){
     LNode* cur = list->head;
     while(cur){
@@ -145,10 +147,8 @@ void TraverseDeathList(struct List* list){
     while (cur)
     {
         cur = UpdateDeath(list, cur);
-    }
-        
+    }        
 }
-
 
 LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
     LNode* original;
@@ -161,6 +161,7 @@ LNode* ListItemAction(struct List* list, LNode* item, struct List* Death){
             return postCollisions;
         }
 #endif
+// if postCollisions = original, this means that the node still is in the queue and we need to update it's data
         switch(item->obj_type){
             case OBJ_PLAYER_ID:
                 return UpdatePlayer(list, item);
@@ -202,14 +203,17 @@ unsigned char cmp(LNode* node1, LNode* node2){
     struct Object* ob1;
     struct Object* ob2;
     unsigned int dx,dy, size;
+// can't self-intersect
     if(node1 == node2){
         return 0;
     }
     ob1 = extractObj(node1);
     ob2 = extractObj(node2);
+// if either object doesn't exist, can't collide with something
     if(!ob1 || !ob2){
         return 0;
     }
+// AABB collision detection
     dx = ob1->x.b.msb - ob2->x.b.msb;
     dy = ob1->y.b.msb - ob2->y.b.msb;
     size  = ob1->size.b.msb+ ob2->size.b.msb;
@@ -224,8 +228,8 @@ LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, uns
     LNode * og;
     LNode* itr;
     LNode* output;
-    unsigned char collision_maybe;
-    unsigned int x;
+    unsigned char collision;
+    unsigned int x; // profiler variable
     output = cur;
     og = cur;
     itr = cur->next;
@@ -252,9 +256,9 @@ LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, uns
             }
         }
         PROFILER_START(x)
-        collision_maybe = cmp(og,itr);
+        collision = cmp(og,itr);
         PROFILER_END(x)
-        if(collision_maybe){
+        if(collision){
 // if update_death, then add objects to Death queue. Don't add bullets to Death
             if(update_death){
                 if(og->obj_type!=OBJ_BULLET_ID){
@@ -266,13 +270,11 @@ LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, uns
             }
 // Regardless of update_death, remove both og and the current iterator from the queue. Return value of itr (this is next valid node)
                 Remove(list,og);
-                output = Remove(list,itr);
-                output;
-            return output;
+                return  Remove(list,itr);
         }
         else{
 // No collision found (yet). simply increment itr to next;
-            itr = itr->next;
+            itr = getNext(itr);
         }
 
     }

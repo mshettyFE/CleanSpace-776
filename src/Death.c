@@ -34,10 +34,6 @@ LNode* initDeathAnim(LNode* node){
             break;
         case OBJ_METEOR_ID:
             metr_id = (struct Meteor*) node->item;
-            if(metr_id == NULL){
-                free(anim);
-                return NULL;
-            }
             switch (metr_id->meteor_type)
             {
             case BIG_METEOR_SIZE:
@@ -64,13 +60,14 @@ LNode* UpdateDeath(struct List* DeathList, LNode* cur){
     struct Object* obj;
     if(!cur){return NULL;}
     anim = (struct DeathAnim*) cur->item;
-    if(!anim){return NULL;}
     updateObject(anim->obj);
     anim->counter += 1;
+// display next frame
     if(anim->counter >= DEATH_FRAME_COUNTER){
         anim->counter = 0;
         anim->obj->cur_frame += 1;
     }
+// if we go over the number of animation frames, remove animation from screen
     if(anim->obj->cur_frame >= (anim->starting_frame+MAX_DEATH_FRAMES) ){
         return Remove(DeathList, cur);
     }

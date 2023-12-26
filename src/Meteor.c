@@ -2,15 +2,8 @@
 #include "gen/assets/Meteor.h"
 #include "gen/assets/SmallMeteor.h"
 
-extern const signed char p_cosine_msb[8];
-extern const signed char p_sine_msb[8];
-extern const unsigned char p_cosine_lsb[8];
-extern const unsigned char p_sine_lsb[8];
-
-
-struct Meteor* initMeteor(const coordinate a_x,const  coordinate  a_y, char a_meteor_type){
+struct Meteor* initMeteor(coordinate a_x, coordinate  a_y, char a_meteor_type){
     struct Meteor* mtr = malloc(sizeof(struct Meteor));
-    if(!mtr){return NULL;}
     mtr->meteor_type = a_meteor_type;
     switch (mtr->meteor_type)
     {
@@ -23,11 +16,6 @@ struct Meteor* initMeteor(const coordinate a_x,const  coordinate  a_y, char a_me
              SMALL_METEOR_SIZE, &ASSET__SmallMeteor__SmallMeteor_json, SMALL_METEOR_BANK, gen_small_meteor_frame , SPRITE_FLIP_NONE);
         break;
     }
-    if(mtr->obj == NULL){
-        free(mtr->obj);
-        free(mtr);
-        return NULL;
-    }
     return mtr;
 }
 
@@ -37,7 +25,6 @@ void freeMeteor(LNode* node){
         return;
     }
     mtr = (struct Meteor*) node->item;
-    if(!mtr){        return;}
     freeObj(mtr->obj);
     free(mtr);
 }

@@ -7,7 +7,7 @@
 #define PLAYER_ONE_STRT_FRAME 0
 #define PLAYER_TWO_STRT_FRAME 8
 
-#define BULLET_COOLDOWN 50
+#define BULLET_COOLDOWN 50 // Number of frames before a bullet can be shoot again
 
 #include "input.h"
 
@@ -17,12 +17,10 @@
 #include "globals.h"
 #include "Bullet.h"
 
-extern coordinate max_speed_squared;
-
 struct Player{
     struct Object* obj;
     unsigned char player_num;
-    unsigned char bullet_timer;
+    unsigned char bullet_timer; // how long until you can shoot again
 };
 
 struct Player* initPlayer(char a_x,  char a_y, char a_bank, unsigned char a_player_num);

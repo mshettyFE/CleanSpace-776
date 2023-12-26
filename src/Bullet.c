@@ -3,11 +3,8 @@
 #include "Bullet.h"
 #include "player.h"
 
-extern void ZZZZZZZZZZZZZZZZZZZZZZZZZ();
-
-struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const coordinate*  a_v_x, const coordinate* a_v_y, char a_bank, char origin){
+struct Bullet* initBullet(coordinate a_x, coordinate a_y, coordinate  a_v_x, coordinate a_v_y, char a_bank, char origin){
     struct Bullet* blt = malloc(sizeof(struct Bullet));
-    if(!blt){return NULL;}
     blt->frame_toggle = 0;
     blt->display_counter = BULLET_FRAME_COUNTER;
     blt->lifetime = BULLET_LIFETIME;
@@ -22,10 +19,6 @@ struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const co
             blt->origin = PLYR_TWO_ID;
             blt->obj = initObjectCoord( a_x, a_y, a_v_x, a_v_y, BULLET_SIZE, &ASSET__Bullets__Bullets_json, a_bank, 1, SPRITE_FLIP_NONE);
             break;
-    }
-    if(blt->obj == NULL){
-        free(blt);
-        return NULL;
     }
     return blt;
 }
@@ -58,6 +51,7 @@ LNode* UpdateBullet(struct List* objList, LNode* node){
             output =  Remove(objList,node);
             return output;
         }
+// flipping frames of bullet
         if(blt->display_counter == 0){
             blt->display_counter = BULLET_FRAME_COUNTER;
             if(blt->frame_toggle){
