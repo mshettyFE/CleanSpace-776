@@ -12,3 +12,7 @@ Controls on GameTank controller:
 Based on gametank C SDK, which can be found [here](https://github.com/clydeshaffer/gametank_sdk).
 
 You will also need to get the GameTank emulator, which can be found [here](https://github.com/clydeshaffer/GameTankEmulator).
+
+Font taken from accursed fiend, found [here](https://github.com/clydeshaffer/fiend).
+
+Background generated via [this utility](https://deep-fold.itch.io/space-background-generator).

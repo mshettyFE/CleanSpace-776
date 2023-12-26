@@ -8,6 +8,7 @@
 #define METEOR_BANK 3
 #define SMALL_METEOR_BANK 4
 #define DEATH_BANK 5
+#define BACK_BANK 6
 
 // object sizes
 #define BULLET_SIZE 3

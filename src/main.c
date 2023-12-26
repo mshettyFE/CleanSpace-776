@@ -8,6 +8,7 @@
 #include "gen/assets/Death.h"
 #include "gen/assets/Meteor.h"
 #include "gen/assets/SmallMeteor.h"
+#include "gen/assets/Background.h"
 #include "gen/assets/font.h"
 #include "object.h"
 #include "player.h"
@@ -60,10 +61,7 @@ void displayText(const char* str){
             ((player2_buttons & INPUT_MASK_START & ~player2_old_buttons )) ){
             break;
         }
-        await_draw_queue();
         sleep(1);
-        flip_pages();
-        tick_music();
     }
 }
 
@@ -84,6 +82,7 @@ int main () {
     load_spritesheet(&ASSET__Bullets__Bullets_bmp, BULLET_BANK);
     load_spritesheet(&ASSET__Meteor__Meteor_bmp, METEOR_BANK);
     load_spritesheet(&ASSET__SmallMeteor__SmallMeteor_bmp, SMALL_METEOR_BANK);
+    load_spritesheet(&ASSET__Background__background_bmp, BACK_BANK);
 
     GenField(objList, DeathAnimations);
 
