@@ -2,8 +2,6 @@
 #include "gametank.h"
 #include <stdlib.h>
 
-extern unsigned int XXXXXXXXXXXXXXXXXX;
-
 struct Object* initObject( char a_x,  char a_y,  char a_v_x,  char a_v_y,  char a_size,
   const char **a_sprite_table, char a_sprite_table_bank, char a_bank, char a_cur_frame, char a_cur_flip){
     struct Object *output = malloc(sizeof(struct Object));
@@ -63,9 +61,11 @@ struct Object* initObjectCoord( coordinate  a_x,  coordinate a_y, coordinate  a_
 }
 
 void updateObject(struct Object* obj){
-// & with 0x7FFF to prevent overflow. anythinga above 0x7F is 128, which is not a valid index on the screen
-  obj->x.i = (obj->x.i+obj->v_x.i) & 0x7FFF;
-  obj->y.i = (obj->y.i+obj->v_y.i) & 0x7FFF;
+// & with 0x7FFF to prevent overflow. anything above 0x7F is 128, which is not a valid index on the screen
+  if(paused == 0){
+    obj->x.i = (obj->x.i+obj->v_x.i) & 0x7FFF;
+    obj->y.i = (obj->y.i+obj->v_y.i) & 0x7FFF;
+  }
   draw_sprite_frame(obj->sprite_table, obj->sprite_table_bank, obj->x.b.msb, obj->y.b.msb, obj->cur_frame, obj->cur_flip, obj->bank);
 }
 

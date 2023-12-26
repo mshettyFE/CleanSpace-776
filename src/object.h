@@ -14,6 +14,8 @@ Encodes things with the following properties:
 #include "coordinate.h"
 #include <stdlib.h>
 
+extern char paused;
+
 
 struct Object{
   coordinate x;

@@ -22,6 +22,9 @@ char player_1_present = 0;
 char player_2_present = 0;
 char meteor_present = 0;
 
+char paused = 0;
+
+
 #define MAX_METEORS 5
 
 void GenField(struct List* objList, struct List* death){
@@ -71,26 +74,21 @@ int main () {
         clear_screen(0);
         clear_border(1);
         update_inputs();
-
-// iterate through object list. For each item in the object list, update state of object. This includes adding to list(s) of objects to create or delete
-// update screen with objects (ignore what needs to be added/deleted for now)
-// For each new object to be created, add to the tree
-// For each new object to be deleted, remove from the tree
         TraverseList(objList, DeathAnimations);
         TraverseDeathList(DeathAnimations);
-
-        await_draw_queue();
-        sleep(1);
-        flip_pages();
-        tick_music();
-        ++cur_frame;
-
         if(player1_buttons & INPUT_MASK_C || player2_buttons & INPUT_MASK_C){
                 ClearList(objList);
                 ClearList(DeathAnimations);
                 GenField(objList, DeathAnimations);
                 continue;
         }
+
+        if( (player_1_present && (player1_buttons & INPUT_MASK_START & ~player1_old_buttons ) ) ||
+         (player_2_present &&  (player2_buttons & INPUT_MASK_START & ~player2_old_buttons )) ){
+            paused = ~paused;
+            continue;
+        }
+
 
         if(DeathAnimations->size == 0){
             if(   ( !player_1_present && !player_2_present)  ||  !meteor_present){
@@ -100,6 +98,11 @@ int main () {
                 continue;
             }
         }
+        await_draw_queue();
+        sleep(1);
+        flip_pages();
+        tick_music();
+        ++cur_frame;
 
     }
 

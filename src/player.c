@@ -217,10 +217,6 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
                 bullet_pos_x = plyr->obj->x;
                 bullet_pos_y = plyr->obj->y;
                 blt = initBullet(bullet_pos_x, bullet_pos_y, bullet_vel_x, bullet_vel_y, BULLET_BANK,plyr->player_num);
-                if(blt == NULL){
-                    updateObject(plyr->obj);
-                    return node->next;
-                }
                 AddToHead(objList,blt, OBJ_BULLET_ID);
             }
         }
