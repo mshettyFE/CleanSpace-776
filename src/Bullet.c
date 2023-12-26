@@ -3,7 +3,7 @@
 #include "Bullet.h"
 #include "player.h"
 
-void ZZZZZZZZZZZZZZZZZZZZZZZZZ(){}
+extern void ZZZZZZZZZZZZZZZZZZZZZZZZZ();
 
 struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const coordinate*  a_v_x, const coordinate* a_v_y, char a_bank, char origin){
     struct Bullet* blt = malloc(sizeof(struct Bullet));
@@ -33,16 +33,11 @@ struct Bullet* initBullet(const coordinate* a_x,const  coordinate* a_y, const co
 void freeBullet(LNode* node){
     struct Bullet* blt;
     if(node->obj_type != OBJ_BULLET_ID){
-        ZZZZZZZZZZZZZZZZZZZZZZZZZ();
         return;
     }
     blt = (struct Bullet*) node->item;
-    if(blt == NULL){
-        return;
-    }
     freeObj(blt->obj);
     free(blt);
-    free(node);
 }
 
 LNode* UpdateBullet(struct List* objList, LNode* node){

@@ -10,7 +10,7 @@
 
 extern unsigned char meteor_present;
 
-//#define USE_COL
+#define USE_COL
 
 struct List* initList(){
     struct List* out = malloc(sizeof(struct List));
@@ -24,7 +24,6 @@ struct List* initList(){
 LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type){
     LNode* temp;
     LNode* opt = malloc(sizeof(LNode));
-    if(!opt){return NULL;}
     opt->obj_type = obj_type;
     opt->item = obj;
     list->size += 1;
@@ -118,16 +117,16 @@ void freeListItem(LNode* cur){
     switch (cur->obj_type)
     {
     case OBJ_DEATH_ID:
-        freeDeath(cur->item);
+        freeDeath(cur);
         break;
     case OBJ_PLAYER_ID:
-        freePlayer(cur->item);
+        freePlayer(cur);
         break;
     case OBJ_BULLET_ID:
-        freeBullet(cur->item);
+        freeBullet(cur);
         break;
     case OBJ_METEOR_ID:
-        freeMeteor(cur->item);
+        freeMeteor(cur);
         break;
     }
     free(cur);

@@ -40,7 +40,6 @@ void freeMeteor(LNode* node){
     if(!mtr){        return;}
     freeObj(mtr->obj);
     free(mtr);
-    free(node);
 }
 
 LNode* UpdateMeteor(struct List* objList, LNode* node){

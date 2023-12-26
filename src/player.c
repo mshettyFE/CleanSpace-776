@@ -51,7 +51,6 @@ void freePlayer(LNode* node){
     }
     freeObj(plyr->obj);
     free(plyr);
-    free(node);
 }
 
 LNode* UpdatePlayer(struct List* objList, LNode* node){

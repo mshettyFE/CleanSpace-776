@@ -21,10 +21,12 @@ unsigned char player_1_present = 0;
 unsigned char player_2_present = 0;
 unsigned char meteor_present = 0;
 
+void ZZZZZZZZZZZZZZZZZZZZZZZZZ(){};
+
 #define MAX_METEORS 4
 
 #define INCLUDE_PLAYERS
-//#define INCLUDE_METEORS
+#define INCLUDE_METEORS
 
 int main () {
     char i = 0;
@@ -95,7 +97,7 @@ int main () {
                 continue;
         }
 
-        if(DeathAnimations->size == 0){            
+        if(DeathAnimations->size == 0){
             if(
 #ifdef INCLUDE_PLAYERS
                 ( !player_1_present && !player_2_present) 
@@ -109,7 +111,6 @@ int main () {
               !meteor_present
 #endif
                  ){
-//            if(  !meteor_present ){
                 ClearList(objList);
                 ClearList(DeathAnimations);
                 AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);

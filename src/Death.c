@@ -86,6 +86,5 @@ void freeDeath(LNode* cur){
     }
     freeObj(d->obj);
     free(d);
-    free(cur);
 }
 
