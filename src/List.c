@@ -230,35 +230,31 @@ LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, uns
     og = cur;
     itr = cur->next;
     while(itr){
-// collision found. 
+// none of these collisions result in an animation, so if any of these are true, don't do collision math
+        if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_BULLET_ID)){
+            itr = itr->next;
+            continue;
+        }
+        if((og->obj_type==OBJ_METEOR_ID) && (itr->obj_type==OBJ_METEOR_ID)){
+            itr = itr->next;
+            continue;
+        }
+        if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_PLAYER_ID)){
+            if(  ((struct Bullet*)og->item)->origin == ((struct Player*)itr->item)->player_num ){
+                itr = itr->next;
+                continue;
+            }
+        }
+        if((og->obj_type==OBJ_PLAYER_ID) && (itr->obj_type==OBJ_BULLET_ID)){
+            if(  ((struct Player*)og->item)->player_num == ((struct Bullet*)itr->item)->origin ){
+                itr = itr->next;
+                continue;
+            }
+        }
         PROFILER_START(x)
         collision_maybe = cmp(og,itr);
         PROFILER_END(x)
         if(collision_maybe){
-// check if both are bullets. If so, then continue iterating through list
-            if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_BULLET_ID)){
-                itr = itr->next;
-                continue;
-            }
-// check if both are meteors. If so, then continue iterating through list
-            if((og->obj_type==OBJ_METEOR_ID) && (itr->obj_type==OBJ_METEOR_ID)){
-                itr = itr->next;
-                continue;
-            }
-//check if one if PLAYER and the other is BULLET. If Bullet came from that Player, continue on. Do for both ways
-            if((og->obj_type==OBJ_BULLET_ID) && (itr->obj_type==OBJ_PLAYER_ID)){
-                if(  ((struct Bullet*)og->item)->origin == ((struct Player*)itr->item)->player_num ){
-                    itr = itr->next;
-                    continue;
-                }
-            }
-            if((og->obj_type==OBJ_PLAYER_ID) && (itr->obj_type==OBJ_BULLET_ID)){
-                if(  ((struct Player*)og->item)->player_num == ((struct Bullet*)itr->item)->origin ){
-                    itr = itr->next;
-                    continue;
-                }
-            }
-
 // if update_death, then add objects to Death queue. Don't add bullets to Death
             if(update_death){
                 if(og->obj_type!=OBJ_BULLET_ID){
