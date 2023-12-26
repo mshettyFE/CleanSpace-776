@@ -18,16 +18,24 @@ extern char player_1_present;
 extern char player_2_present;
 
 struct Player* initPlayer(  char a_x,  char a_y, char a_bank, char a_player_num){
+    coordinate x_vel;
+    coordinate y_vel;
+    coordinate x_pos;
+    coordinate y_pos;
     struct Player* plyr = malloc(sizeof(struct Player));
+    x_pos = create_coord(a_x,0);
+    y_pos = create_coord(a_y,0);
+    x_vel.i = gen_rand_x_vel;
+    y_vel.i = gen_rand_x_vel;
     plyr->player_num = a_player_num;
     plyr->bullet_timer = BULLET_COOLDOWN;
     switch (plyr->player_num)
     {
     case PLYR_ONE_ID:
-        plyr->obj = initObject( a_x, a_y, 0, 0, PLAYER_SIZE, &ASSET__Small__Small_json, a_bank, PLAYER_ONE_STRT_FRAME, SPRITE_FLIP_NONE);
+        plyr->obj = initObjectCoord( x_pos, y_pos, x_vel, y_vel, PLAYER_SIZE, &ASSET__Small__Small_json, a_bank, PLAYER_ONE_STRT_FRAME, SPRITE_FLIP_NONE);
         break;
     case PLYR_TWO_ID:
-        plyr->obj = initObject( a_x, a_y, 0, 0, PLAYER_SIZE, &ASSET__Small__Small_json, a_bank, PLAYER_TWO_STRT_FRAME, SPRITE_FLIP_NONE);
+        plyr->obj = initObjectCoord( x_pos, y_pos, x_vel, y_vel, PLAYER_SIZE, &ASSET__Small__Small_json, a_bank, PLAYER_TWO_STRT_FRAME, SPRITE_FLIP_NONE);
         break;    
     default:
         break;

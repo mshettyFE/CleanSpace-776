@@ -24,7 +24,7 @@ void init_text() {
 
 void load_font(char slot) {
     font_slot = slot;
-    load_spritesheet(&ASSET__font__bios8_bmp, slot);
+    load_spritesheet(&ASSET__font__fiend_fonts_bmp, slot);
 }
 
 char text_tmp;

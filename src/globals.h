@@ -2,6 +2,7 @@
 #define CONSTANTS
 
 // sprite bank locations
+#define FONT_BANK 0
 #define BULLET_BANK 1
 #define SMALL_BANK  2
 #define METEOR_BANK 3

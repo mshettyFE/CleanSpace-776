@@ -7,7 +7,7 @@
 #define PLAYER_ONE_STRT_FRAME 0
 #define PLAYER_TWO_STRT_FRAME 8
 
-#define BULLET_COOLDOWN 50 // Number of frames before a bullet can be shoot again
+#define BULLET_COOLDOWN 30 // Number of frames before a bullet can be shoot again
 
 #include "input.h"
 
