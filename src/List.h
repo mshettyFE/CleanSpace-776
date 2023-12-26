@@ -39,11 +39,9 @@ LNode* AddToHead(struct List* list, void* obj, unsigned char obj_type);
 LNode* AddNodeToHead(struct List* list, LNode* opt);
 
 
-void ClearList(struct List* list, void(*freeData)(LNode* cur));
+void ClearList(struct List* list);
 
-LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) );
-
-LNode* RemoveDeath(struct List* list, LNode* it, void(*freeItem)(LNode* cur) );
+LNode* Remove(struct List* list, LNode* it );
 
 void freeListItem(LNode* cur);
 

@@ -23,6 +23,9 @@ unsigned char meteor_present = 0;
 
 #define MAX_METEORS 4
 
+//#define INCLUDE_PLAYERS
+#define INCLUDE_METEORS
+
 int main () {
     char i = 0;
     char col = 32, row = 64;
@@ -51,13 +54,15 @@ int main () {
     load_spritesheet(&ASSET__Meteor__Meteor_bmp, METEOR_BANK);
     load_spritesheet(&ASSET__SmallMeteor__SmallMeteor_bmp, SMALL_METEOR_BANK);
 
+#ifdef INCLUDE_PLAYERS
     AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
     AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
-
+#endif
+#ifdef INCLUDE_METEORS
     for(i=0; i< MAX_METEORS; ++i){
         AddToHead(objList, initMeteor(gen_rand_x, gen_rand_y , SMALL_METEOR), OBJ_METEOR_ID);
     }
-
+#endif
     while (1) {//  Run forever
         player_1_present  = 0;
         player_2_present  = 0;
@@ -80,8 +85,8 @@ int main () {
         ++cur_frame;
 
         if(player1_buttons & INPUT_MASK_C || player2_buttons & INPUT_MASK_C){
-                ClearList(objList,freeListItem);
-                ClearList(DeathAnimations,freeDeath);
+                ClearList(objList);
+                ClearList(DeathAnimations);
                 AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
                 AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
                 for(i=0; i< MAX_METEORS; ++i){
@@ -90,11 +95,23 @@ int main () {
                 continue;
         }
 
-        if(DeathAnimations->size == 0){
-            if(( !player_1_present && !player_2_present) ||   !meteor_present ){
+        if(DeathAnimations->size == 0){            
+            if(
+#ifdef INCLUDE_PLAYERS
+                ( !player_1_present && !player_2_present) 
+#endif
+#ifdef INCLUDE_PLAYERS
+#ifdef INCLUDE_METEORS
+                ||
+#endif
+#endif 
+#ifdef INCLUDE_METEORS               
+              !meteor_present
+#endif
+                 ){
 //            if(  !meteor_present ){
-                ClearList(objList,freeListItem);
-                ClearList(DeathAnimations,freeDeath);
+                ClearList(objList);
+                ClearList(DeathAnimations);
                 AddToHead(objList,initPlayer(  col_two,  row_two, SMALL_BANK, PLYR_TWO_ID),OBJ_PLAYER_ID);
                 AddToHead(objList,initPlayer(  col,  row, SMALL_BANK, PLYR_ONE_ID),OBJ_PLAYER_ID);
                 for(i=0; i< MAX_METEORS; ++i){

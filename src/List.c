@@ -10,7 +10,7 @@
 
 extern unsigned char meteor_present;
 
-#define USE_COL
+//#define USE_COL
 
 struct List* initList(){
     struct List* out = malloc(sizeof(struct List));
@@ -67,34 +67,30 @@ LNode* getNext(LNode* node){
     return NULL;
 }
 
-LNode* RemoveDeath(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
-    return Remove(list, it, &freeItem);
-}
-
-
 // assumes that node exists in list. Returns next pointer
-LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
+LNode* Remove(struct List* list, LNode* it ){
     LNode* previous;
     LNode* next_one;
     if(it){
         list->size -= 1;
         if(list->head == it){
             next_one = list->head->next;
-            freeItem(it);
+            freeListItem(it);
             list->head = next_one;
+            next_one->prev = NULL;
             return next_one;
         }
         else if(list->tail == it){
             previous = list->tail->prev;
             previous->next = NULL;
-            freeItem(it);
+            freeListItem(it);
             it = NULL;
             return NULL;
         }
         else{
             previous = it->prev;
             next_one = it->next;
-            freeItem(it);
+            freeListItem(it);
             it = NULL;
             previous->next = next_one;
             next_one->prev = previous;
@@ -106,7 +102,7 @@ LNode* Remove(struct List* list, LNode* it, void(*freeItem)(LNode* cur) ){
 }
 
 
-void ClearList(struct List* list, void(*freeData)(LNode* cur)){
+void ClearList(struct List* list){
     LNode* tmp;
     LNode* cur;
     if(list==NULL){
@@ -114,7 +110,7 @@ void ClearList(struct List* list, void(*freeData)(LNode* cur)){
     }
     cur = list->head;
     while(cur){
-        cur = Remove(list,cur, freeData);
+        cur = Remove(list,cur);
     }
 }
 
@@ -132,6 +128,7 @@ void freeListItem(LNode* cur){
         break;
     case OBJ_METEOR_ID:
         freeMeteor(cur->item);
+        break;
     }
     free(cur);
 }
@@ -273,8 +270,8 @@ LNode* DealWithCollisions(struct List* list, LNode* cur, struct List* Death, uns
                 }
             }
 // Regardless of update_death, remove both og and the current iterator from the queue. Return value of itr (this is next valid node)
-                Remove(list,og,freeListItem);
-                output = Remove(list,itr,freeListItem);
+                Remove(list,og);
+                output = Remove(list,itr);
                 output;
             return output;
         }

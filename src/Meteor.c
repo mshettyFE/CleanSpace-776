@@ -2,12 +2,6 @@
 #include "gen/assets/Meteor.h"
 #include "gen/assets/SmallMeteor.h"
 
-extern unsigned int AAAAAAAAAAAAAAAAAA;
-extern unsigned int OOOOOOOOOOOOOOOOOO;
-extern unsigned int XXXXXXXXXXXXXXXXXX;
-extern unsigned int YYYYYYYYYYYYYYYYYY;
-extern void ZZZZZZZZZZZZZZZZZZZZZZZ();
-
 extern const signed char p_cosine_msb[8];
 extern const signed char p_sine_msb[8];
 extern const unsigned char p_cosine_lsb[8];

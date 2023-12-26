@@ -72,7 +72,7 @@ LNode* UpdateDeath(struct List* DeathList, LNode* cur){
         anim->obj->cur_frame += 1;
     }
     if(anim->obj->cur_frame >= (anim->starting_frame+MAX_DEATH_FRAMES) ){
-        return Remove(DeathList, cur, freeDeath);
+        return Remove(DeathList, cur);
     }
     return cur->next;
 }

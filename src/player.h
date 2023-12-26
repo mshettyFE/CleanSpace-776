@@ -7,7 +7,7 @@
 #define PLAYER_ONE_STRT_FRAME 0
 #define PLAYER_TWO_STRT_FRAME 8
 
-#define BULLET_COOLDOWN 50
+#define BULLET_COOLDOWN 1
 
 #include "input.h"
 
