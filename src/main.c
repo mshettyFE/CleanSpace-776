@@ -23,8 +23,8 @@ unsigned char meteor_present = 0;
 
 #define MAX_METEORS 4
 
-//#define INCLUDE_PLAYERS
-#define INCLUDE_METEORS
+#define INCLUDE_PLAYERS
+//#define INCLUDE_METEORS
 
 int main () {
     char i = 0;

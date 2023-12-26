@@ -179,12 +179,21 @@ LNode* UpdatePlayer(struct List* objList, LNode* node){
         }
 
         acceleration_x = gen_x_accel(index,plyr->obj->cur_flip);
-        acceleration_x.i = acceleration_x.i>>1;
+        if(player_inpts & INPUT_MASK_B){
+            acceleration_x.i = acceleration_x.i << 1;
+        }
+        else{
+            acceleration_x.i = acceleration_x.i>>1;
+        }
         acceleration_y = gen_y_accel(index,plyr->obj->cur_flip);
-        acceleration_y.i = acceleration_y.i>>1;
+        if(player_inpts & INPUT_MASK_B){
+            acceleration_y.i = acceleration_y.i << 1;
+        }
+        else{
+            acceleration_y.i = acceleration_y.i>>1;
+        }
         
         if(player_inpts & INPUT_MASK_UP) {
-
             plyr->obj->v_x.i = acceleration_x.i;
             plyr->obj->v_y.i = acceleration_y.i;
         }
